@@ -1,0 +1,32 @@
+.Btn {
+  width: 100px;
+  height: 35px;
+  font-size: 16px;
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.Btn:active {
+  transform: translateY(2px);
+}
+
+.Submit {
+  background: rgb(38, 38, 38);
+  box-shadow: 0 0 10px rgb(38, 38, 38, 0.1);
+  color: #ffffff;
+}
+
+.Cancel {
+  background: #f1f1f1;
+  box-shadow: 0 0 10px rgba(241, 241, 241, 0.1);
+  color: rgb(38, 38, 38);
+}
+
+/* .Btn:active {
+  background: #17213f;
+  color: #f1f1f1;
+  border: 1px solid #a1add1;
+} */

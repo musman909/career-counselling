@@ -1,0 +1,11 @@
+.Navlink {
+  color: #fff;
+  display: block;
+  font-size: 15px;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.Navlink:hover {
+  color: #c76d15;
+}

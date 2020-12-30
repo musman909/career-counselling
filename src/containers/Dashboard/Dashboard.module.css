@@ -1,0 +1,34 @@
+.Dashboard {
+  position: relative;
+}
+
+.UserProfile,
+.TestHistory {
+  padding: 20px 40px;
+}
+
+.ProfileInfo {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Hr {
+  height: 1px;
+  margin: 30px 0;
+  background: #eee;
+}
+
+.TestHistoryTable {
+  width: 100%;
+  margin: 20px 10px 0 10px;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.TestHistoryTable td,
+.TestHistoryTable th {
+  padding: 15px 0;
+  border: 1px solid #eee;
+}

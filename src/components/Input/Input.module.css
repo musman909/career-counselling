@@ -1,0 +1,73 @@
+.InputContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.InputContainer + .InputContainer {
+  margin: 20px 0;
+}
+
+.InputContainer label {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+  flex-basis: 25%;
+  min-width: 100px;
+  color: rgb(38, 38, 38);
+  padding-top: 2px;
+}
+
+.InputContainer .InputWrapper {
+  align-self: flex-end;
+  justify-self: flex-end;
+  flex-basis: 75%;
+}
+
+.InputWrapper input,
+.InputWrapper select,
+.InputWrapper select option {
+  color: rgb(38, 38, 38);
+  font-size: 16px;
+  border: 0;
+  outline: 0;
+}
+
+.InputWrapper select {
+  border: 1px solid rgb(38, 38, 38);
+  border-radius: 3px;
+}
+
+.InputWrapper select option:first-child {
+  display: none;
+}
+
+.InputWrapper input,
+.InputWrapper select {
+  width: 100%;
+}
+.InputWrapper input[type='text'],
+.InputWrapper input[type='password'],
+.InputWrapper input[type='email'] {
+  /* text-transform: capitalize; */
+  border-bottom: 1px solid rgb(38, 38, 38);
+  transition: border-color 0.1s ease;
+}
+
+.InputWrapper input.RedBorder {
+  border-color: red;
+}
+
+.InputWrapper p {
+  width: 100%;
+  height: 20px;
+  font-size: 13px;
+  color: red;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.InputWrapper p.ShowError {
+  opacity: 1;
+}

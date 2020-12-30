@@ -1,25 +1,69 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import Dashboard from './containers/Dashboard/Dashboard';
+import Home from './containers/Home/Home';
+import Registration from './containers/Registration/Registration';
+import Login from './containers/Login/Login';
+import Tests from './containers/Tests/Tests';
+import EditProfile from './containers/EditProfile/EditProfile';
+
+class App extends Component {
+  state = {
+    userNavLinks: [
+      {
+        title: 'tests',
+        link: '/'
+      },
+      {
+        title: 'about',
+        link: '/'
+      },
+      {
+        title: 'faq',
+        link: '/'
+      },
+      {
+        title: 'contact us',
+        link: '/'
+      }
+    ],
+
+    homeNavLinks: [
+      {
+        title: 'home',
+        link: '/'
+      },
+      {
+        title: 'about',
+        link: '/'
+      },
+      {
+        title: 'faq',
+        link: '/'
+      },
+      {
+        title: 'contact us',
+        link: '/'
+      },
+      {
+        title: 'login',
+        link: '/'
+      }
+    ]
+  };
+  render() {
+    return (
+      <div className="App">
+        {/* <EditProfile navLinks={this.state.userNavLinks} /> */}
+        <Tests navLinks={this.state.userNavLinks} />
+        {/* <Home navLinks={this.state.homeNavLinks} /> */}
+        {/* <Dashboard navLinks={this.state.userNavLinks} /> */}
+        {/* <Registration /> */}
+        {/* <Login /> */}
+      </div>
+    );
+  }
 }
 
 export default App;

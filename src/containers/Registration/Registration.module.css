@@ -1,0 +1,13 @@
+.Registration {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0 0 0;
+}
+
+.Logo {
+  display: block;
+  width: 200px;
+  height: 150px;
+}

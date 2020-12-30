@@ -1,0 +1,36 @@
+.Form {
+  width: 60%;
+  min-width: 400px;
+  padding: 50px;
+}
+
+.BtnsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.Btn {
+  background: transparent;
+  color: #f1f1f1;
+  width: 100px;
+  height: 35px;
+  font-size: 16px;
+  border: 1px solid #a1add1;
+  outline: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Btn:hover {
+  color: #17213f;
+  background: #f1f1f1;
+  border: 0;
+}
+
+.Btn:active {
+  background: #17213f;
+  color: #f1f1f1;
+  border: 1px solid #a1add1;
+}

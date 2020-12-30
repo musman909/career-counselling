@@ -1,0 +1,52 @@
+.Tests {
+}
+
+.InputContainer {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.InputContainer label {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 20px 0 10px;
+}
+.InputContainer select {
+  width: 30%;
+  margin: 0 10px 0 0;
+  outline: none;
+}
+
+.InputContainer select,
+.InputContainer select option {
+  font-size: 16px;
+
+  text-transform: capitalize;
+  margin: 10px;
+  padding: 2px;
+}
+
+.StartBtn {
+  display: block;
+  background: rgb(199, 109, 21);
+  color: #ffffff;
+  border: 0;
+  outline: 0;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 10px 60px;
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
+  transition: transform 0.05s ease;
+}
+
+.StartBtn:active {
+  transform: translateY(2px);
+}

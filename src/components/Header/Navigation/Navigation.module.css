@@ -1,0 +1,21 @@
+.Navigation {
+  z-index: 10;
+  margin: 0 15px 0 5%;
+}
+
+.Navigation ul {
+  list-style: none;
+  display: flex;
+}
+
+.NavItem {
+  padding: 0 15px;
+}
+
+.NavItem {
+  border-right: 1px solid #fff;
+}
+
+.NavItem:last-child {
+  border: 0;
+}

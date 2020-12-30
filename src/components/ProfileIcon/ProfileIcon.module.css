@@ -1,0 +1,55 @@
+.ProfileIcon {
+  width: 115px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.Dropdown {
+  /* border: 1px solid red; */
+  background: #ffffff;
+  border-radius: 5px;
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  height: 0;
+  overflow: hidden;
+}
+
+.Dropdown ul {
+  list-style: none;
+}
+
+.Dropdown li {
+  width: 150px;
+  text-align: center;
+  padding: 10px 0;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+
+.Dropdown li:first-child {
+  border-bottom: 0;
+}
+
+.Dropdown li:hover {
+  background: rgb(199, 109, 21);
+}
+
+.Dropdown li:hover a {
+  color: #ffffff;
+}
+
+.Dropdown ul li a {
+  display: block;
+  text-decoration: none;
+  color: rgb(38, 38, 38);
+}
+
+.ShowDropDown {
+  height: auto !important;
+}
