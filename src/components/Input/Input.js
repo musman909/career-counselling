@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Input.module.css';
+
+const eye = <FontAwesomeIcon icon={faEye} />;
 
 class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      inputValue: props.value,
       isFocused: false,
       showError: false
     };
   }
+
+  // componentDidMount() {
+  //   this.setState({ inputValue: this.props.value });
+  // }
 
   componentDidUpdate() {
     if (this.props.errorStatus) {
@@ -22,10 +31,16 @@ class Input extends Component {
     }
   }
 
+  togglePasswordVisibility = () => {
+    const type = this.props.inputType === 'text' ? 'password' : 'text';
+    this.props.onChange(this.props.id, 'inputType', type);
+  };
+
   onValueChangeHandler = (e) => {
     const enteredText = e.target.value;
     this.setState((curState) => ({
       ...curState,
+      inputValue: enteredText,
       showError: !this.props.validateInput(this.props.id, enteredText)
     }));
   };
@@ -37,47 +52,93 @@ class Input extends Component {
     }
     this.setState((curState) => ({
       ...curState,
+      inputValue: enteredText,
       showError: !this.props.validateInput(this.props.id, enteredText)
     }));
     this.props.onChange(this.props.id, 'value', enteredText);
   };
 
-  // getErrorStatus = (text) => {
-  //   return !text || text.length < 5 ? true : false;
-  // };
-
   render() {
-    // console.log(this.props);
+    let input = null;
+    switch (this.props.inputType.toLowerCase()) {
+      case 'select':
+        input = (
+          <select
+            key={this.props.id}
+            value={this.state.inputValue}
+            onChange={(e) => this.onValueChangeHandler(e)}
+            onBlur={(e) => this.onBlurHandler(e)}
+          >
+            {this.props.options.map((option) => {
+              if (this.state.inputValue === option.toLowerCase()) {
+                return (
+                  <option
+                    key={option.toLowerCase()}
+                    value={option.toLowerCase()}
+                  >
+                    {option}
+                  </option>
+                );
+              } else {
+                return (
+                  <option
+                    key={option.toLowerCase()}
+                    value={option.toLowerCase()}
+                  >
+                    {option}
+                  </option>
+                );
+              }
+            })}
+          </select>
+        );
+        break;
+      case 'textarea':
+        input = (
+          <textarea
+            style={{ resize: 'none' }}
+            className={
+              this.state.showError && this.state.isFocused
+                ? classes.RedBorder
+                : null
+            }
+            value={this.state.inputValue}
+            resize="none"
+            type={this.props.inputType}
+            accept={this.props.accept}
+            onChange={(e) => this.onValueChangeHandler(e)}
+            onBlur={(e) => this.onBlurHandler(e)}
+          />
+        );
+        break;
+      default:
+        input = (
+          <input
+            className={
+              this.state.showError && this.state.isFocused
+                ? classes.RedBorder
+                : null
+            }
+            value={this.state.inputValue}
+            type={this.props.inputType}
+            accept={this.props.accept}
+            onChange={(e) => this.onValueChangeHandler(e)}
+            onBlur={(e) => this.onBlurHandler(e)}
+          />
+        );
+        break;
+    }
     return (
       <div className={classes.InputContainer}>
-        <label>{this.props.inputLabel}</label>
+        <label style={{ ...this.props.inputLabelStyles }}>
+          {this.props.inputLabel}
+        </label>
 
         <div className={classes.InputWrapper}>
-          {this.props.inputType.toLowerCase() === 'select' ? (
-            <select
-              key={this.props.id}
-              onChange={(e) => this.onValueChangeHandler(e)}
-              onBlur={(e) => this.onBlurHandler(e)}
-            >
-              {this.props.options.map((option) => (
-                <option key={option.toLowerCase()} value={option.toLowerCase()}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              className={
-                this.state.showError && this.state.isFocused
-                  ? classes.RedBorder
-                  : null
-              }
-              type={this.props.inputType}
-              accept={this.props.accept}
-              onChange={(e) => this.onValueChangeHandler(e)}
-              onBlur={(e) => this.onBlurHandler(e)}
-            />
-          )}
+          {input}
+          {this.props.id === 'password' || this.props.id === 'cPassword' ? (
+            <i onClick={this.togglePasswordVisibility}>{eye}</i>
+          ) : null}
           <p
             className={
               this.state.showError && this.state.isFocused

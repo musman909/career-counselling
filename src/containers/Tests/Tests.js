@@ -1,191 +1,279 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
-import SwiperCore, { Navigation, Pagination } from 'swiper';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-import 'swiper/swiper-bundle.css';
+import Swiper from 'react-id-swiper';
+import 'swiper/swiper-bundle.min.css';
 
 import classes from './Tests.module.css';
 import './Tests.css';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import InputsGroup from '../../components/InputsGroup/InputsGroup';
+import Spinner from '../../components/Spinner/Spinner';
+import Button from '../../components/Button/Button';
+import dummyTest from '../../constants/testData';
+import inputTypes from '../../constants/inputTypes';
+import testNames from '../../constants/testNames';
 
-SwiperCore.use([Navigation]);
-
-const inputTypes = {
-  field: 'field',
-  dropDown: 'dropdown',
-  checkBox: 'checkbox',
-  radio: 'radio'
+// Params definition
+const params = {
+  pagination: {
+    el: '.swiper-pagination',
+    type: 'fraction',
+    clickable: false
+  },
+  navigation: {
+    nextEl: '.swiper-next-btn',
+    prevEl: '.swiper-prev-btn'
+  },
+  spaceBetween: 0,
+  allowTouchMove: false
 };
 
 class Tests extends Component {
-  state = {
-    tests: [
-      {
-        id: 1,
-        name: 'test1',
-        data: [
-          {
-            question: "What's your current study status?",
-            options: ['Matric', 'Intermediate'],
-            inputType: inputTypes.dropDown
-          },
-          {
-            question:
-              'From follwing, which bachelors degree program, you want to go?',
-            options: ['BS(CS)', 'BS(IT)', 'BBA', 'BS (Psychology)'],
-            inputType: inputTypes.dropDown
-          },
-          {
-            question: "What's your favourite subjects?",
-            inputType: inputTypes.field
-          },
-          {
-            question: 'Current Status',
-            inputType: inputTypes.checkBox,
-            options: [
-              'Student',
-              'Freelancer',
-              'Internee',
-              'Job Holder',
-              'Working on your own Projects',
-              'Other'
-            ]
-          },
-          {
-            question: 'Desired Profession',
-            inputType: inputTypes.field
-          },
+  constructor() {
+    super();
+    this.swiperRef = createRef();
+    this.state = {
+      selectedTestName: null,
+      testIsSelected: false,
+      showTest: false,
+      loading: false,
+      activeQuestionNum: null
+    };
+  }
 
-          {
-            question: 'What game do you like the most?',
-            inputType: inputTypes.checkBox,
-            options: [
-              'Indoor games',
-              'Outdoor games',
-              'Video games',
-              'None of these'
-            ]
-          },
-          {
-            question: 'what kind of hobbies do you have?',
-            inputType: inputTypes.checkBox,
-            options: [
-              'Travel, meet strangers',
-              'Volunteering, community service or charity work.',
-              'Sports such as competing on a team or in a league, hiking or other exercise.',
-              'Creative arts, including writing, music, painting and crafts.',
-              'Cooking or gardening.',
-              'other'
-            ]
-          },
-          {
-            question:
-              'Please choose the word that describes you most of the time.',
-            inputType: inputTypes.radio,
-            options: ['Structured', 'Flexible']
-          },
-
-          {
-            question:
-              'Please choose the word that describes you most of the time.',
-            inputType: inputTypes.radio,
-            options: ['Feeling', 'Thinking']
-          },
-          {
-            question: 'Are you a person that is more inclined to',
-            inputType: inputTypes.radio,
-            options: ['Be in Control', 'Be Adaptable']
-          },
-          {
-            question: 'In general, would you describe yourself as more',
-            inputType: inputTypes.radio,
-            options: ['Appreciative', 'Questioning']
-          },
-          {
-            question: 'Do your coworkers/Fellows consider you to be more',
-            inputType: inputTypes.radio,
-            options: ['Outgoing', 'Reserved']
-          },
-          {
-            question:
-              'Do you consider yourself a person that likes to focus on',
-            inputType: inputTypes.radio,
-            options: ['What is', 'What Could be']
-          },
-          {
-            question: 'Which role is more natural for you at work',
-            inputType: inputTypes.radio,
-            options: ['To critique and analyze', 'To compliment and appreciate']
-          },
-
-          {
-            question:
-              'At work you are part of a planning committee. Are you more inspired by',
-            inputType: inputTypes.radio,
-            options: ['Vision', 'Facts']
-          },
-
-          {
-            question: 'What is more satisfying at work',
-            inputType: inputTypes.radio,
-            options: ['Organizing', 'Going with the flow']
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: 'test2',
-        data: {}
-      },
-      {
-        id: 3,
-        name: 'test3',
-        data: {}
-      }
-    ]
+  testSelectHandler = (e) => {
+    this.setState({
+      testIsSelected: true,
+      selectedTestName: e.target.value
+    });
   };
-  render() {
+
+  showTestHandler = () => {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      const selectedTest = { id: dummyTest.id, data: [] };
+
+      dummyTest.data.forEach((testData) => {
+        if (
+          testData.inputType === inputTypes.checkBox ||
+          testData.inputType === inputTypes.radio
+        ) {
+          const options = {};
+          testData.options.forEach((option) => {
+            options[option] = { isChecked: false };
+          });
+          selectedTest.data.push({ ...testData, options, value: '' });
+        } else if (
+          testData.inputType === inputTypes.field ||
+          testData.inputType === inputTypes.dropDown
+        ) {
+          selectedTest.data.push({ ...testData, value: '' });
+        }
+      });
+
+      this.setState({
+        selectedTest,
+        showTest: true,
+        activeQuestionNum: 0,
+        loading: false
+      });
+    }, 3000);
+  };
+
+  setUserResponse = (e, type, index) => {
+    if (type === inputTypes.checkBox) {
+      const data = [...this.state.selectedTest.data];
+      let val = data[index].value;
+      if (e.target.checked) {
+        val = `${val}&${e.target.value}`;
+      } else {
+        const optArr = val.split('&');
+        val = optArr.filter((opt) => opt !== e.target.value).join('&');
+      }
+      data[index].value = val;
+      for (const key in data[index].options) {
+        if (val.includes(key)) {
+          data[index].options[key].isChecked = true;
+        } else {
+          data[index].options[key].isChecked = false;
+        }
+      }
+
+      this.setState((curState) => ({
+        ...curState,
+        selectedTest: {
+          ...curState.selectedTest,
+          data
+        }
+      }));
+    } else if (type === inputTypes.radio) {
+      const data = [...this.state.selectedTest.data];
+      data[index].value = e.target.value;
+      for (const key in data[index].options) {
+        data[index].options[key].isChecked = false;
+      }
+      data[index].options[e.target.value].isChecked = true;
+      this.setState((curState) => ({
+        ...curState,
+        selectedTest: {
+          ...curState.selectedTest,
+          data
+        }
+      }));
+    } else if (type === inputTypes.field || type === inputTypes.dropDown) {
+      const data = [...this.state.selectedTest.data];
+      data[index].value = e.target.value;
+      this.setState((curState) => ({
+        ...curState,
+        selectedTest: {
+          ...curState.selectedTest,
+          data
+        }
+      }));
+    }
+  };
+
+  disabledPrevButton = () => {
     return (
-      <div className={classes.Tests}>
-        <Header navLinks={this.props.navLinks} isAuth={true} />
-        <div className={classes.InputContainer}>
+      this.state.selectedTest === null ||
+      this.state.activeQuestionNum === null ||
+      this.state.activeQuestionNum <= 0
+    );
+  };
+  disableNextButton = () => {
+    return (
+      this.state.selectedTest === null ||
+      this.state.activeQuestionNum === null ||
+      !this.state.selectedTest.data[this.state.activeQuestionNum].value ||
+      this.state.activeQuestionNum >= this.state.selectedTest.data.length - 1
+    );
+  };
+
+  disableSubmitButton = () => {
+    return this.state.selectedTest.data.some(
+      (testData) => testData.value === ''
+    );
+  };
+
+  goPrevQuestion = () => {
+    if (this.swiperRef.current && this.swiperRef.current.swiper) {
+      this.swiperRef.current.swiper.slidePrev();
+      this.setState((curState) => ({
+        activeQuestionNum: curState.activeQuestionNum - 1
+      }));
+    }
+  };
+  goNextQuestion = () => {
+    if (this.swiperRef.current && this.swiperRef.current.swiper) {
+      this.swiperRef.current.swiper.slideNext();
+      this.setState((curState) => ({
+        activeQuestionNum: curState.activeQuestionNum + 1
+      }));
+    }
+  };
+
+  submitTestHandler = () => {
+    let test = {
+      id: this.state.selectedTestName,
+      date: new Date().toString(),
+      data: []
+    };
+    for (const key in this.state.selectedTest.data) {
+      test.data.push({
+        question: this.state.selectedTest.data[key].question,
+        answer: this.state.selectedTest.data[key].value
+      });
+    }
+
+    this.props.addTestHandler(test);
+    this.props.history.push('/');
+  };
+
+  render() {
+    let test = (
+      <div className={classes.InputContainer}>
+        <div className={classes.Input}>
           <label>Choose a test: </label>
-          <select>
-            {this.state.tests.map((test) => (
-              <option key={test.id} value={test.name}>
-                {test.name}
+          <select onChange={this.testSelectHandler}>
+            <option className={classes.DropDownMessage}>select a test</option>
+            {testNames.map((name) => (
+              <option key={name} value={name}>
+                {name}
               </option>
             ))}
           </select>
         </div>
-        <button className={classes.StartBtn}>Start Test</button>
+        <Button
+          text="Show Test"
+          styles={{
+            margin: 'auto'
+          }}
+          type="Btn3"
+          click={this.showTestHandler}
+          disable={!this.state.testIsSelected || this.state.selectedTest}
+        />
+      </div>
+    );
+
+    if (this.state.loading) {
+      test = <Spinner />;
+    }
+
+    if (this.state.showTest && !this.state.loading) {
+      test = (
         <div className={classes.TestScreen}>
-          <Swiper spaceBetween={0} slidesPerView={1} navigation>
-            {this.state.tests[0].data.map((data) => {
+          <Swiper {...params} ref={this.swiperRef}>
+            {this.state.selectedTest.data.map((data, index) => {
               let Cmp = null;
               if (
-                data.inputType === inputTypes.checkBox ||
-                data.inputType === inputTypes.radio
+                data.inputType === inputTypes.radio ||
+                data.inputType === inputTypes.checkBox
               ) {
+                const inputsData = [];
+                for (const option in data.options) {
+                  inputsData.push({
+                    option: option,
+                    isChecked: data.options[option].isChecked
+                  });
+                }
                 Cmp = (
-                  <div className="QuestionOptions">
-                    {data.options.map((option) => (
-                      <div key={option} className="QuestionOption">
-                        <input type={data.inputType} value={option} />
-                        <label>{option}</label>
-                      </div>
-                    ))}
-                  </div>
+                  <InputsGroup
+                    inputsData={inputsData}
+                    type={data.inputType}
+                    name={data.question}
+                    onChangeHandler={(e) =>
+                      this.setUserResponse(e, data.inputType, index)
+                    }
+                  />
                 );
               } else if (data.inputType === inputTypes.field) {
-                Cmp = <input type="text" placeholder="Your answer" />;
+                Cmp = (
+                  <input
+                    type="text"
+                    placeholder="Your answer"
+                    value={data.value}
+                    onChange={(e) =>
+                      this.setUserResponse(e, data.inputType, index)
+                    }
+                  />
+                );
               } else if (data.inputType === inputTypes.dropDown) {
                 Cmp = (
-                  <select className="Dropdown">
+                  <select
+                    className="Dropdown"
+                    value={data.value}
+                    onChange={(e) =>
+                      this.setUserResponse(e, data.inputType, index)
+                    }
+                  >
+                    <option className={classes.DropDownMessage}>
+                      -- select a value --
+                    </option>
                     {data.options.map((option) => (
                       <option key={option} value={option}>
                         {option}
@@ -195,20 +283,65 @@ class Tests extends Component {
                 );
               }
               return (
-                <SwiperSlide key={Math.random() * Math.random()}>
-                  <div className="Question">
-                    <h2>{data.question}</h2>
-                    {Cmp}
-                  </div>
-                </SwiperSlide>
+                <div className="Question" key={data.question + index}>
+                  <h2>{data.question}</h2>
+                  {Cmp}
+                </div>
               );
             })}
           </Swiper>
+          <div className={classes.BtnsContainer}>
+            <Button
+              text="Previous"
+              styles={{
+                margin: '0 10px'
+              }}
+              type="Btn4"
+              click={this.goPrevQuestion}
+              disable={this.disabledPrevButton()}
+            />
+            <Button
+              text="Next"
+              styles={{
+                margin: '0 10px'
+              }}
+              type="Btn4"
+              click={this.goNextQuestion}
+              disable={this.disableNextButton()}
+            />
+          </div>
+          <Button
+            text="Submit"
+            styles={{
+              width: '80%',
+              margin: '70px auto 20px auto'
+            }}
+            type="Btn3"
+            click={this.submitTestHandler}
+            disable={this.disableSubmitButton()}
+          />
         </div>
+      );
+    }
+
+    return (
+      <div id="TestScreen" className={classes.Tests}>
+        <Header />
+        <div className={classes.Test}>{test}</div>
         <Footer />
       </div>
     );
   }
 }
 
-export default Tests;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTestHandler: (test) =>
+      dispatch({
+        type: actionTypes.ADD_TEST,
+        test: test
+      })
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(Tests));

@@ -1,52 +1,68 @@
 .Tests {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.Test {
+  flex: 1;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .InputContainer {
   width: 100%;
-  height: 200px;
+}
+
+.Input {
+  width: 100%;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
 }
 
-.InputContainer label {
+.Input label {
   font-size: 20px;
   font-weight: bold;
   margin: 0 20px 0 10px;
 }
-.InputContainer select {
+.Input select {
   width: 30%;
   margin: 0 10px 0 0;
   outline: none;
 }
 
-.InputContainer select,
-.InputContainer select option {
+.Input select,
+.Input select option {
   font-size: 16px;
-
   text-transform: capitalize;
   margin: 10px;
   padding: 2px;
 }
 
-.StartBtn {
-  display: block;
-  background: rgb(199, 109, 21);
-  color: #ffffff;
-  border: 0;
-  outline: 0;
-  border-radius: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: capitalize;
-  padding: 10px 60px;
-  text-align: center;
-  margin: auto;
-  cursor: pointer;
-  transition: transform 0.05s ease;
+.DropDownMessage {
+  display: none;
 }
 
-.StartBtn:active {
-  transform: translateY(2px);
+.TestScreen {
+  background: #fafafa;
+  border: 1.5px solid #eee;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.TestScreen input,
+.TestScreen select {
+  background: inherit;
+}
+
+.BtnsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
 }

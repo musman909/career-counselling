@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import classes from './ProfileIcon.module.css';
 import profileIcon from '../../assests/images/profile-icon.jpg';
@@ -26,10 +27,10 @@ class ProfileIcon extends Component {
         <div className={dropDownClasses.join(' ')}>
           <ul>
             <li>
-              <a href="/">Edit Profile</a>
+              <Link to="/edit-profile">Edit Profile</Link>
             </li>
             <li>
-              <a href="/">Logout</a>
+              <Link to="/">Logout</Link>
             </li>
           </ul>
         </div>

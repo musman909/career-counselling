@@ -1,0 +1,55 @@
+.TestResultScreen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.TestResult {
+  margin-top: 80px;
+  padding: 30px 40px;
+  flex: 1;
+  /* border: 1px solid #eee; */
+}
+
+.TestResult h1 {
+  font-size: 25px;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.TestResult h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.TestResult h1 span,
+.TestResult h4 span {
+  color: rgb(199, 109, 21);
+  text-transform: capitalize;
+}
+
+.TestResult ul {
+  list-style: none;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.TestResult ul li {
+  margin: 10px 0;
+}
+
+.TestResult ul li p {
+  color: black;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+.TestResult ul li p.Question span {
+  color: rgb(38, 38, 38);
+}
+
+.TestResult ul li p.Answer span {
+  color: rgb(199, 109, 21);
+}

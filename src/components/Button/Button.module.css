@@ -1,4 +1,5 @@
 .Btn {
+  display: block;
   width: 100px;
   height: 35px;
   font-size: 16px;
@@ -6,27 +7,63 @@
   outline: 0;
   border-radius: 5px;
   cursor: pointer;
-  transition: transform 0.1s ease;
+  transition: transform 0.05s ease-in;
 }
 
 .Btn:active {
   transform: translateY(2px);
 }
 
-.Submit {
+.Btn1,
+.Btn5 {
   background: rgb(38, 38, 38);
-  box-shadow: 0 0 10px rgb(38, 38, 38, 0.1);
-  color: #ffffff;
+  color: rgb(255, 255, 255);
 }
 
-.Cancel {
-  background: #f1f1f1;
-  box-shadow: 0 0 10px rgba(241, 241, 241, 0.1);
+.Btn1:hover {
+  background: rgb(255, 255, 255);
   color: rgb(38, 38, 38);
+  border: 1px solid rgb(38, 38, 38);
 }
 
-/* .Btn:active {
-  background: #17213f;
-  color: #f1f1f1;
-  border: 1px solid #a1add1;
-} */
+.Btn2 {
+  background: rgb(255, 255, 255);
+  color: rgb(38, 38, 38);
+  border: 1px solid rgb(38, 38, 38);
+}
+
+.Btn2:hover {
+  background: rgb(38, 38, 38);
+  color: rgb(255, 255, 255);
+}
+
+.Btn3,
+.Btn6 {
+  background: rgb(199, 109, 21);
+  color: rgb(255, 255, 255);
+}
+
+.Btn3:hover {
+  background: rgb(255, 255, 255);
+  color: rgb(199, 109, 21);
+  border: 1px solid rgb(199, 109, 21);
+}
+
+.Btn4 {
+  background: rgb(255, 255, 255);
+  color: rgb(199, 109, 21);
+  border: 1px solid rgb(199, 109, 21);
+}
+
+.Btn4:hover {
+  background: rgb(199, 109, 21);
+  color: rgb(255, 255, 255);
+}
+
+.Disable {
+  pointer-events: none !important;
+  background: rgb(170, 170, 170) !important;
+  color: rgb(255, 255, 255) !important;
+  border: 0 !important;
+  outline: none !important;
+}

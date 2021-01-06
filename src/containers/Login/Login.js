@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 import classes from './Login.module.css';
 import logo from '../../assests/images/logo.jpeg';
@@ -53,6 +57,7 @@ class Login extends Component {
     if (type === 'password') {
       return true;
     }
+
     return false;
   };
 
@@ -68,14 +73,36 @@ class Login extends Component {
       );
       this.onStateChangeHandler('email', 'errorStatus', true);
       error = true;
+    } else if (!this.props.users[this.state.userData.email.value]) {
+      this.onStateChangeHandler(
+        'email',
+        'errorMessage',
+        'email address does not exists!'
+      );
+      this.onStateChangeHandler('email', 'errorStatus', true);
+      error = true;
+    } else if (
+      this.props.users[this.state.userData.email.value].password !==
+      this.state.userData.password.value
+    ) {
+      this.onStateChangeHandler(
+        'password',
+        'errorMessage',
+        'password does not match!'
+      );
+      this.onStateChangeHandler('password', 'errorStatus', true);
+      error = true;
     }
 
     if (!error) {
-      alert('User Authenticated');
+      this.props.changeAuthHandler(true);
+      this.props.setActiveUserHandler(this.state.userData.email.value);
+      this.props.history.push('/');
     }
   };
 
   render() {
+    // console.log(this.state.userData.email.value);
     const transformedUserData = [];
     for (const key in this.state.userData) {
       transformedUserData.push({ ...this.state.userData[key], id: key });
@@ -98,14 +125,24 @@ class Login extends Component {
               validateInput={this.isValidInputHandler}
             />
           ))}
-
+          <p className={classes.ForgetMsg}>
+            <Link to={`${this.props.match.url}/forget-password`}>
+              forget password?
+            </Link>
+          </p>
           <div className={classes.BtnsContainer}>
             <Button
               text="Login"
-              type={btnTypes.submit}
+              type={btnTypes.Button4}
               click={this.validateUserHandler}
             />
-            <Button text="Cancel" type={btnTypes.cancel} click={() => {}} />
+            <Button
+              text="Cancel"
+              type={btnTypes.Button2}
+              click={() => {
+                this.props.history.push('/');
+              }}
+            />
           </div>
         </form>
       </div>
@@ -113,4 +150,23 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeAuthHandler: (auth) =>
+      dispatch({ type: actionTypes.CHANGE_AUTH, auth: auth }),
+
+    setActiveUserHandler: (email) =>
+      dispatch({
+        type: actionTypes.SET_ACTIVE_USER,
+        activeUser: email
+      })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

@@ -1,39 +1,26 @@
-.swiper-container {
+#TestScreen .swiper-container {
   width: 100%;
   height: auto !important;
   text-align: left;
 }
 
-.Question {
+/* #TestScreen .swiper-container .swiper-next-btn,
+#TestScreen .swiper-container .swiper-prev-btn {
+  display: none !important;
+  opacity: 0 !important;
+} */
+
+#TestScreen .swiper-container .Question {
   padding: 20px 5%;
 }
 
-.Question h2 {
+#TestScreen .swiper-container .Question h2 {
   color: #000;
   font-size: 20px;
   margin-bottom: 20px;
 }
 
-.QuestionOptions label {
-  font-size: 16px;
-  margin-left: 5px;
-}
-
-.QuestionOption,
-.QuestionOption {
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-}
-
-.QuestionOption input[type='checkbox'],
-.QuestionOption input[type='radio'] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-
-.Question input[type='text'] {
+#TestScreen .swiper-container .Question input[type='text'] {
   display: block;
   resize: none;
   width: 50%;
@@ -45,17 +32,17 @@
   transition: border 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.Question input[type='text']:focus {
+#TestScreen .swiper-container .Question input[type='text']:focus {
   border-bottom: 2px solid rgb(199, 109, 21);
 }
 
-.Question .Dropdown {
+#TestScreen .swiper-container .Question .Dropdown {
   width: 200px;
   font-size: 16px;
   border: 2px solid #eee;
   outline: none;
 }
 
-.Question .Dropdown:focus {
+#TestScreen .swiper-container .Question .Dropdown:focus {
   border: 2px solid #eee;
 }

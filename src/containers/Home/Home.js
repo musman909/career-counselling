@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
@@ -6,6 +7,7 @@ import Banner from '../../components/Banner/Banner';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import Footer from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
+import btnTypes from '../../constants/btnTypes';
 
 class Home extends Component {
   state = {
@@ -65,7 +67,13 @@ class Home extends Component {
             successfully and live a life of a common man due to their unknown
             abilities.
           </p>
-          <Button text="Learn More" click={() => {}} />
+          <Button
+            text="Learn More"
+            type={btnTypes.Button1}
+            click={() => {
+              this.props.history.push('/about');
+            }}
+          />
         </div>
         <Footer />
       </div>
@@ -73,4 +81,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

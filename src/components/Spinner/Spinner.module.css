@@ -1,9 +1,9 @@
-.loader {
-  color: #ffffff;
+.Loader {
+  color: rgb(199, 109, 21);
   font-size: 20px;
   margin: 100px auto;
-  width: 1em;
-  height: 1em;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   position: relative;
   text-indent: -9999em;

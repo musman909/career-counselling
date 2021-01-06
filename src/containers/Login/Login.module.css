@@ -18,6 +18,10 @@
   padding: 50px;
 }
 
+.ForgetMsg a {
+  text-decoration: none;
+}
+
 .BtnsContainer {
   display: flex;
   align-items: center;

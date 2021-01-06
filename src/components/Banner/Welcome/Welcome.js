@@ -1,8 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import classes from './Welcome.module.css';
+import Button from '../../Button/Button';
+import btnTypes from '../../../constants/btnTypes';
 
-const Welcome = () => {
+const Welcome = (props) => {
   return (
     <div className={classes.Welcome}>
       <h1 className={classes.Heading}>Welcome</h1>
@@ -11,9 +14,29 @@ const Welcome = () => {
         help you explorer your hidden talent and reccommed you what's career is
         most suitable for you.
       </p>
-      <button className={classes.Button}>Register</button>
+      <Button
+        styles={{
+          display: 'block',
+          width: '200px',
+          border: '0',
+          margin: 'auto'
+        }}
+        text="Register"
+        type={btnTypes.Button5}
+        click={() => {
+          props.history.push('/register');
+        }}
+      />
+      {/* <button
+        className={classes.Button}
+        onClick={() => {
+          props.history.push('/register');
+        }}
+      >
+        Register
+      </button> */}
     </div>
   );
 };
 
-export default Welcome;
+export default withRouter(Welcome);

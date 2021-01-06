@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import classes from './Form.module.css';
 import Input from '../../components/Input/Input';
@@ -19,15 +20,20 @@ const form = (props) => {
 
       <div className={classes.BtnsContainer}>
         <Button
-          styles={{ background: 'rgb(199, 109, 21)', color: '#ffffff' }}
           text={props.submitBtnText}
-          type={btnTypes.submit}
+          type={btnTypes.Button4}
           click={props.formSubmitHandler}
         />
-        <Button text="Cancel" type={btnTypes.cancel} click={() => {}} />
+        <Button
+          text="Cancel"
+          type={btnTypes.Button2}
+          click={() => {
+            props.history.push('/');
+          }}
+        />
       </div>
     </form>
   );
 };
 
-export default form;
+export default withRouter(form);

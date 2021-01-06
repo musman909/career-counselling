@@ -9,6 +9,7 @@
 .Label {
   font-size: 20px;
   font-weight: bold;
+  text-transform: capitalize;
 }
 .Data {
   font-size: 20px;
