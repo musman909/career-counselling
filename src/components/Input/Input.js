@@ -10,15 +10,15 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: props.value,
+      inputValue: '',
       isFocused: false,
       showError: false
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({ inputValue: this.props.value });
-  // }
+  componentDidMount() {
+    this.setState({ inputValue: this.props.value });
+  }
 
   componentDidUpdate() {
     if (this.props.errorStatus) {
@@ -65,7 +65,7 @@ class Input extends Component {
         input = (
           <select
             key={this.props.id}
-            value={this.state.inputValue}
+            value={this.state.inputValue.toLowerCase()}
             onChange={(e) => this.onValueChangeHandler(e)}
             onBlur={(e) => this.onBlurHandler(e)}
           >

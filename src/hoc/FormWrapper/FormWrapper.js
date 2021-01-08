@@ -11,7 +11,7 @@ class FormWrapper extends Component {
     this.state = {
       userData: {
         name: {
-          value: '',
+          value: props.userData ? props.userData['name'] : '',
           errorMessage: 'name should contains atleast 5 characters',
           errorStatus: false,
           inputType: 'text',
@@ -19,7 +19,7 @@ class FormWrapper extends Component {
         },
 
         email: {
-          value: '',
+          value: props.userData ? props.userData['email'] : '',
           errorMessage: 'please enter a valid email address',
           errorStatus: false,
           inputType: 'email',
@@ -27,7 +27,7 @@ class FormWrapper extends Component {
         },
 
         password: {
-          value: '',
+          value: props.userData ? props.userData['password'] : '',
           errorMessage:
             'password should have atleast 8 characters [includes A-Z, a-z & digits]',
           errorStatus: false,
@@ -36,7 +36,7 @@ class FormWrapper extends Component {
         },
 
         cPassword: {
-          value: '',
+          value: props.userData ? props.userData['cPassword'] : '',
           errorMessage: '',
           errorStatus: false,
           inputType: 'password',
@@ -44,8 +44,13 @@ class FormWrapper extends Component {
         },
 
         status: {
-          value: '',
-          options: ['', 'Matric', 'Intermediate', 'Graduate'],
+          value: props.userData ? props.userData['status'] : '',
+          options: [
+            '-- select a value --',
+            'Matric',
+            'Intermediate',
+            'Graduate'
+          ],
           errorMessage: 'select your status',
           errorStatus: false,
           inputType: 'select',
@@ -53,8 +58,8 @@ class FormWrapper extends Component {
         },
 
         city: {
-          value: '',
-          options: ['', ...pakCities],
+          value: props.userData ? props.userData['city'] : '',
+          options: ['-- select a value --', ...pakCities],
           errorMessage: 'select your city',
           errorStatus: false,
           inputType: 'select',
@@ -64,13 +69,13 @@ class FormWrapper extends Component {
     };
   }
 
-  componentDidMount() {
-    if (this.props.componentName === 'EditProfile') {
-      for (let key in this.props.userData) {
-        this.onStateChangeHandler(key, 'value', this.props.userData[key]);
-      }
-    }
-  }
+  // componentDidMount() {
+  //   if (this.props.componentName === 'EditProfile') {
+  //     for (let key in this.props.userData) {
+  //       this.onStateChangeHandler(key, 'value', this.props.userData[key]);
+  //     }
+  //   }
+  // }
 
   onStateChangeHandler = (key, type, value) => {
     this.setState((curState) => ({
@@ -200,7 +205,7 @@ class FormWrapper extends Component {
       transformedUserData.push({ ...this.state.userData[key], id: key });
     }
 
-    console.log(transformedUserData);
+    // console.log(transformedUserData);
 
     return (
       <div className={classes.FormWrapper}>

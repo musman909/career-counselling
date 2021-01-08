@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import axios from 'axios';
+
 import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
 import Banner from '../../components/Banner/Banner';
@@ -71,7 +73,34 @@ class Home extends Component {
             text="Learn More"
             type={btnTypes.Button1}
             click={() => {
-              this.props.history.push('/about');
+              // fetch('/get')
+              //   .then((response) => response.json())
+              //   .then((data) => console.log(data));
+              fetch('/post', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: 'React POST Request' })
+              })
+                .then((response) => response.json())
+                .then((data) => console.log(data));
+              // const requestOptions = {
+              //   method: 'POST',
+              //   headers: { 'Content-Type': 'application/json' },
+              //   body: JSON.stringify({ title: 'React POST Request Example' })
+              // };
+              // fetch(
+              //   'http://localhost:5000/register',
+              //   requestOptions
+              // ).then((response) =>
+              //   response.json().then((res) => console.log(res))
+              // );
+              // axios
+              //   .post('/post', { name: 'usman' })
+              //   .then((res) => {
+              //     console.log(res);
+              //   })
+              //   .catch((err) => console.log(err));
+              // this.props.history.push('/about');
             }}
           />
         </div>

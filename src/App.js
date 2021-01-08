@@ -15,6 +15,8 @@ import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import Faq from './containers/Faq/Faq';
 import Contact from './containers/Contact/Contact';
 import About from './containers/About/About';
+import Reviews from './containers/Reviews/Reviews';
+import Feedback from './containers/Feedback/Feedback';
 
 class App extends Component {
   render() {
@@ -23,8 +25,8 @@ class App extends Component {
       userRoutes = (
         <React.Fragment>
           <Route path="/tests" component={Tests} />
-
           <Route path="/edit-profile" component={EditProfile} />
+
           <Route path="/view-result/:id" component={TestResult} />
         </React.Fragment>
       );
@@ -40,6 +42,8 @@ class App extends Component {
           <Route path="/contact" exact component={Contact} />
           <Route path="/about" exact component={About} />
           <Route path="/faq" exact component={Faq} />
+          {/* <Route path="/reviews" exact component={Reviews} /> */}
+          <Route path="/feedback" component={Feedback} />
 
           <Route path="/login/forget-password" component={ForgetPassword} />
           <Route path="/register" component={Registration} />

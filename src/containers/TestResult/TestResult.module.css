@@ -53,3 +53,9 @@
 .TestResult ul li p.Answer span {
   color: rgb(199, 109, 21);
 }
+
+.BtnsContainers {
+  margin: 20px auto 50px auto;
+  display: flex;
+  align-items: center;
+}

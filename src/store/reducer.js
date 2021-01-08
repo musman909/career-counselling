@@ -37,6 +37,10 @@ const initialState = {
       link: '/tests'
     },
     {
+      title: 'reviews',
+      link: '/reviews'
+    },
+    {
       title: 'about',
       link: '/about'
     },

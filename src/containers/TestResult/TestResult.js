@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Spinner from '../../components/Spinner/Spinner';
+import Button from '../../components/Button/Button';
 
 import classes from './TestResult.module.css';
+import btnTypes from '../../constants/btnTypes';
 
 class TestResult extends Component {
   state = {
@@ -56,6 +58,20 @@ class TestResult extends Component {
                 </li>
               ))}
             </ul>
+          </div>
+          <div className={classes.BtnsContainers}>
+            <Button
+              styles={{ margin: '0 20px' }}
+              text="Download Result"
+              type={btnTypes.Button4}
+              click={() => {}}
+            />
+            <Button
+              styles={{ margin: '0 20px' }}
+              text="Rate Us"
+              type={btnTypes.Button2}
+              click={() => {}}
+            />
           </div>
           <Footer />
         </div>

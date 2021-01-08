@@ -86,15 +86,17 @@ class Tests extends Component {
   };
 
   setUserResponse = (e, type, index) => {
+    let data = null;
     if (type === inputTypes.checkBox) {
-      const data = [...this.state.selectedTest.data];
+      data = [...this.state.selectedTest.data];
       let val = data[index].value;
       if (e.target.checked) {
-        val = `${val}&${e.target.value}`;
+        val = val === '' ? `${e.target.value}` : `${val}&${e.target.value}`;
       } else {
         const optArr = val.split('&');
         val = optArr.filter((opt) => opt !== e.target.value).join('&');
       }
+
       data[index].value = val;
       for (const key in data[index].options) {
         if (val.includes(key)) {
@@ -103,39 +105,24 @@ class Tests extends Component {
           data[index].options[key].isChecked = false;
         }
       }
-
-      this.setState((curState) => ({
-        ...curState,
-        selectedTest: {
-          ...curState.selectedTest,
-          data
-        }
-      }));
     } else if (type === inputTypes.radio) {
-      const data = [...this.state.selectedTest.data];
+      data = [...this.state.selectedTest.data];
       data[index].value = e.target.value;
       for (const key in data[index].options) {
         data[index].options[key].isChecked = false;
       }
       data[index].options[e.target.value].isChecked = true;
-      this.setState((curState) => ({
-        ...curState,
-        selectedTest: {
-          ...curState.selectedTest,
-          data
-        }
-      }));
     } else if (type === inputTypes.field || type === inputTypes.dropDown) {
-      const data = [...this.state.selectedTest.data];
+      data = [...this.state.selectedTest.data];
       data[index].value = e.target.value;
-      this.setState((curState) => ({
-        ...curState,
-        selectedTest: {
-          ...curState.selectedTest,
-          data
-        }
-      }));
     }
+    this.setState((curState) => ({
+      ...curState,
+      selectedTest: {
+        ...curState.selectedTest,
+        data
+      }
+    }));
   };
 
   disabledPrevButton = () => {
@@ -189,6 +176,8 @@ class Tests extends Component {
         answer: this.state.selectedTest.data[key].value
       });
     }
+
+    console.log(test);
 
     this.props.addTestHandler(test);
     this.props.history.push('/');

@@ -14,7 +14,9 @@ class EditProfile extends Component {
     const userData = {};
     userData['email'] = this.props.activeUserEmail;
     for (const key in this.props.activeUserData) {
-      userData[key] = this.props.activeUserData[key];
+      if (key !== 'tests') {
+        userData[key] = this.props.activeUserData[key];
+      }
     }
 
     this.setState({ userData });

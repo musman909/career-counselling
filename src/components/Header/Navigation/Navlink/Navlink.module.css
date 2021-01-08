@@ -9,3 +9,7 @@
 .Navlink:hover {
   color: #c76d15;
 }
+
+.Navlink.active {
+  color: #c76d15 !important;
+}

@@ -3,8 +3,6 @@ import React from 'react';
 import classes from './InputsGroup.module.css';
 
 const inputsGroup = (props) => {
-  // console.log(props.inputsData);
-  // console.log('-------------------------------------');
   return (
     <div className={classes.InputsGroup}>
       {props.inputsData.map((data) => (
@@ -14,7 +12,7 @@ const inputsGroup = (props) => {
             type={props.type}
             checked={data.isChecked}
             value={data.option}
-            name={props.name}
+            name={props.type === 'checkbox' ? props.name : null}
             onChange={props.onChangeHandler}
           />
           <label htmlFor={data.option}>{data.option}</label>

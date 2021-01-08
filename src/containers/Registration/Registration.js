@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
@@ -25,8 +27,12 @@ class Registration extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    registerUserHandler: (userData) =>
-      dispatch({ type: actionTypes.REGISTER_USER, userData: userData })
+    registerUserHandler: (userData) => {
+      fetch(`/post?data=${JSON.stringify(userData)}`)
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+      // dispatch({ type: actionTypes.REGISTER_USER, userData: userData });
+    }
   };
 };
 

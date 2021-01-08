@@ -30,7 +30,6 @@ class Dashboard extends Component {
     const userInfos = [];
     userInfos.push({ label: 'email', data: this.props.activeUserEmail });
     for (const key in this.props.activeUserData) {
-      console.log(key === 'tests');
       if (key === 'tests') {
         userInfos.push({
           label: `${key} Given`,
