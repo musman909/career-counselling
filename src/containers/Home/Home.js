@@ -51,11 +51,11 @@ class Home extends Component {
         <Header navLinks={this.props.navLinks} />
         <Banner />
         <div className={classes.UserProfile}>
-          <h2>Profile Information</h2>
+          {/* <h2>Profile Information</h2> */}
           <div className={classes.ProfileInfo}>
-            {this.state.userInfos.map((info) => (
+            {/* {this.state.userInfos.map((info) => (
               <UserInfo key={info.label} label={info.label} data={info.data} />
-            ))}
+            ))} */}
           </div>
         </div>
         <div className={classes.Hr}></div>
@@ -73,34 +73,13 @@ class Home extends Component {
             text="Learn More"
             type={btnTypes.Button1}
             click={() => {
-              // fetch('/get')
-              //   .then((response) => response.json())
-              //   .then((data) => console.log(data));
-              fetch('/post', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: 'React POST Request' })
-              })
-                .then((response) => response.json())
-                .then((data) => console.log(data));
-              // const requestOptions = {
+              // fetch('/post', {
               //   method: 'POST',
               //   headers: { 'Content-Type': 'application/json' },
-              //   body: JSON.stringify({ title: 'React POST Request Example' })
-              // };
-              // fetch(
-              //   'http://localhost:5000/register',
-              //   requestOptions
-              // ).then((response) =>
-              //   response.json().then((res) => console.log(res))
-              // );
-              // axios
-              //   .post('/post', { name: 'usman' })
-              //   .then((res) => {
-              //     console.log(res);
-              //   })
-              //   .catch((err) => console.log(err));
-              // this.props.history.push('/about');
+              //   body: JSON.stringify({ title: 'React POST Request' })
+              // })
+              //   .then((response) => response.json())
+              //   .then((data) => console.log(data));
             }}
           />
         </div>

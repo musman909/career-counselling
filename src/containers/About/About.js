@@ -34,7 +34,7 @@ class About extends Component {
 
     if (this.state.aboutData) {
       faq = (
-        <React.Fragment>
+        <div className={classes.AboutScreen}>
           <Header />
           <div className={classes.About}>
             <h1>About Us</h1>
@@ -48,7 +48,7 @@ class About extends Component {
             </ul>
           </div>
           <Footer />
-        </React.Fragment>
+        </div>
       );
     }
     return <React.Fragment>{faq}</React.Fragment>;

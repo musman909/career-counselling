@@ -28,7 +28,8 @@ class Login extends Component {
         inputType: 'password',
         inputLabel: 'Password:'
       }
-    }
+    },
+    userRecord: null
   };
 
   onStateChangeHandler = (key, type, value) => {
@@ -95,9 +96,27 @@ class Login extends Component {
     }
 
     if (!error) {
-      this.props.changeAuthHandler(true);
-      this.props.setActiveUserHandler(this.state.userData.email.value);
-      this.props.history.push('/');
+      fetch(
+        `/login?data=${JSON.stringify({
+          email: this.state.userData.email.value,
+          password: this.state.userData.password.value
+        })}`
+      )
+        .then((data) => data.json())
+        .then((res) => {
+          const userData = {};
+
+          userData.email = res[0][0];
+          userData.name = res[0][1];
+          userData.password = res[0][2];
+          userData.status = res[0][3];
+          userData.city = res[0][4];
+
+          this.props.changeAuthHandler(true);
+          this.props.setActiveUserHandler(userData);
+          this.props.history.push('/');
+        })
+        .catch((err) => console.log(err));
     }
   };
 
@@ -161,10 +180,10 @@ const mapDispatchToProps = (dispatch) => {
     changeAuthHandler: (auth) =>
       dispatch({ type: actionTypes.CHANGE_AUTH, auth: auth }),
 
-    setActiveUserHandler: (email) =>
+    setActiveUserHandler: (userData) =>
       dispatch({
         type: actionTypes.SET_ACTIVE_USER,
-        activeUser: email
+        userData
       })
   };
 };

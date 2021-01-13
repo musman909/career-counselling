@@ -42,7 +42,7 @@ class App extends Component {
           <Route path="/contact" exact component={Contact} />
           <Route path="/about" exact component={About} />
           <Route path="/faq" exact component={Faq} />
-          {/* <Route path="/reviews" exact component={Reviews} /> */}
+          <Route path="/reviews" exact component={Reviews} />
           <Route path="/feedback" component={Feedback} />
 
           <Route path="/login/forget-password" component={ForgetPassword} />

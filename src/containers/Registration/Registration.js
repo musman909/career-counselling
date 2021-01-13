@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import { connect } from 'react-redux';
@@ -28,12 +29,12 @@ class Registration extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     registerUserHandler: (userData) => {
-      fetch(`/post?data=${JSON.stringify(userData)}`)
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      fetch(`/register?data=${JSON.stringify(userData)}`)
+        .then(() => (window.location.href = '/login'))
+        .catch((err) => alert(err));
       // dispatch({ type: actionTypes.REGISTER_USER, userData: userData });
     }
   };
 };
 
-export default connect(null, mapDispatchToProps)(Registration);
+export default connect(null, mapDispatchToProps)(withRouter(Registration));

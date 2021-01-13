@@ -20,7 +20,7 @@ class ProfileIcon extends Component {
       <React.Fragment>
         <img
           src={profileIcon}
-          alt=""
+          alt="Profile"
           className={classes.ProfileIcon}
           onClick={this.toggleDropDownHandler}
         />

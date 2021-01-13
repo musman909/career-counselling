@@ -1,0 +1,49 @@
+.ReviewScreen {
+  display: flex;
+  margin: 50px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.ReviewScreen .Icon {
+  display: block;
+  width: 115px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.Review {
+  /* border: 1px solid red; */
+}
+
+.Review h4 {
+  color: #3c3b37 !important;
+  font-size: 16px;
+}
+
+.Review .Rating {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.Review .Rating fieldset {
+  margin: 0 !important;
+}
+
+.Review .Rating fieldset span {
+  color: rgb(199, 109, 21) !important;
+}
+
+.Review .Rating .Date {
+  font-size: 14px;
+  margin-left: 10px;
+  color: #73726c;
+}
+
+.Review .Comment {
+  margin-top: 7px;
+  line-height: 1.4;
+  font-size: 14px;
+  color: #3c3b37 !important;
+}

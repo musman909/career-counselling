@@ -26,6 +26,9 @@ const initialState = {
       city: 'Lahore'
     }
   },
+
+  userData: null,
+
   activeUser: null,
   userNavLinks: [
     {
@@ -88,7 +91,11 @@ const reducer = (state = initialState, action) => {
 
       return { ...state, users: { ...state.users, [key]: action.userData } };
     case actionTypes.SET_ACTIVE_USER:
-      return { ...state, activeUser: action.activeUser };
+      return {
+        ...state,
+        userData: action.userData,
+        activeUser: action.userData.email
+      };
 
     case actionTypes.ADD_TEST:
       const currentUserData = { ...state.users[state.activeUser] };

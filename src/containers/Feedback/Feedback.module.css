@@ -27,19 +27,20 @@
   text-align: center;
 }
 
-.Feedback .StarsContainer {
+.Feedback .RatingContainer {
   margin: 20px 0 !important;
   width: 100% !important;
   height: 100px !important;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
-.Feedback .StarsContainer > span {
+.Feedback .RatingContainer > span {
   font-size: 4rem !important;
 }
 
-.Feedback .StarsContainer span label {
+.Feedback .RatingContainer span label {
   color: rgb(199, 109, 21);
 }
 

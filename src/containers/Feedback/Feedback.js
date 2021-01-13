@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+// import materialClasses from '../../constants/materialStyles';
 
 import classes from './Feedback.module.css';
 import Header from '../../components/Header/Header';
@@ -22,61 +23,65 @@ const labels = {
   5: 'Excellent+'
 };
 
-const useStyles = makeStyles({
-  root: {
-    width: 200,
-    display: 'flex',
-    alignItems: 'center'
-  }
-});
+class Feedback extends Component {
+  state = {
+    value: 0,
+    hover: -1,
+    comment: ''
+  };
 
-export default function HoverRating() {
-  const [value, setValue] = useState(0);
-  const [hover, setHover] = useState(-1);
-  const [comment, setComment] = useState('');
-  const materialClasses = useStyles();
-
-  return (
-    <div className={classes.FeedbackScreen}>
-      <Header />
-      <div className={classes.Feedback}>
-        <h1>Rate Us!</h1>
-        <div
-          className={[materialClasses.root, classes.StarsContainer].join(' ')}
-        >
-          <Rating
-            name="hover-feedback"
-            size="large"
-            value={value}
-            precision={0.5}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-            onChangeActive={(event, newHover) => {
-              setHover(newHover);
-            }}
+  render() {
+    console.log(this.state);
+    return (
+      <div className={classes.FeedbackScreen}>
+        <Header />
+        <div className={classes.Feedback}>
+          <h1>Rate Us!</h1>
+          <div className={classes.RatingContainer}>
+            <Rating
+              name="hover-feedback"
+              size="large"
+              value={this.state.value}
+              precision={0.5}
+              onChange={(event, newValue) => {
+                this.setState({ value: newValue });
+              }}
+              onChangeActive={(event, newHover) => {
+                this.setState({ hover: newHover });
+              }}
+            />
+            {this.state.value !== null && (
+              <Box ml={2}>
+                {
+                  labels[
+                    this.state.hover !== -1
+                      ? this.state.hover
+                      : this.state.value
+                  ]
+                }
+              </Box>
+            )}
+          </div>
+          <div className={classes.Comment}>
+            <label>Feedback:</label>
+            <textarea
+              className={this.state.value === 0 ? classes.Disable : null}
+              value={this.state.comment}
+              onChange={(e) => this.setState({ comment: e.target.value })}
+            />
+          </div>
+          <Button
+            text="Submit"
+            styles={{ margin: '20px auto' }}
+            type={btnTypes.Button4}
+            click={() => {}}
+            disable={this.state.value === 0}
           />
-          {value !== null && (
-            <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>
-          )}
         </div>
-        <div className={classes.Comment}>
-          <label>Feedback:</label>
-          <textarea
-            className={value === 0 ? classes.Disable : null}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-        </div>
-        <Button
-          text="Submit"
-          styles={{ margin: '20px auto' }}
-          type={btnTypes.Button4}
-          click={() => {}}
-          disable={value === 0}
-        />
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
+    );
+  }
 }
+
+export default Feedback;

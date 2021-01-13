@@ -113,7 +113,7 @@ class Contact extends Component {
       transformedUserData.push({ ...this.state.userData[key], id: key });
     }
     return (
-      <React.Fragment>
+      <div className={classes.ContactScreen}>
         <Header />
         <div className={classes.Contact}>
           <h1 className={classes.Heading}>Contact Us</h1>
@@ -126,7 +126,7 @@ class Contact extends Component {
           />
         </div>
         <Footer />
-      </React.Fragment>
+      </div>
     );
   }
 }

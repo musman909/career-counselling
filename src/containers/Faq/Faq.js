@@ -35,7 +35,7 @@ class Faq extends Component {
 
     if (this.state.faqData) {
       faq = (
-        <React.Fragment>
+        <div className={classes.FaqScreen}>
           <Header />
           <div className={classes.Faq}>
             <h1>Frequently Asked Questions</h1>
@@ -49,7 +49,7 @@ class Faq extends Component {
             </ul>
           </div>
           <Footer />
-        </React.Fragment>
+        </div>
       );
     }
     return <React.Fragment>{faq}</React.Fragment>;
