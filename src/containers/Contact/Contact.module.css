@@ -1,8 +1,12 @@
 .ContactScreen {
-  padding: 1px 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .Contact {
+  flex: 1;
   margin-top: 80px;
   padding: 20px 30px;
 }

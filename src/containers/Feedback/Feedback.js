@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-// import materialClasses from '../../constants/materialStyles';
 
 import classes from './Feedback.module.css';
 import Header from '../../components/Header/Header';
@@ -31,7 +30,6 @@ class Feedback extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className={classes.FeedbackScreen}>
         <Header />

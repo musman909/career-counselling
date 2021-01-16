@@ -11,15 +11,7 @@ class EditProfile extends Component {
   };
 
   componentDidMount() {
-    const userData = {};
-    userData['email'] = this.props.activeUserEmail;
-    for (const key in this.props.activeUserData) {
-      if (key !== 'tests') {
-        userData[key] = this.props.activeUserData[key];
-      }
-    }
-
-    this.setState({ userData });
+    this.setState({ userData: this.props.userData });
   }
 
   render() {
@@ -53,14 +45,13 @@ class EditProfile extends Component {
         </FormWrapper>
       );
     }
-    return <React.Fragment>{screen}</React.Fragment>;
+    return screen;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    activeUserEmail: state.activeUser,
-    activeUserData: state.users[state.activeUser]
+    userData: state.userData
   };
 };
 

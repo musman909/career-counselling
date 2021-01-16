@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import axios from 'axios';
-
 import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
 import Banner from '../../components/Banner/Banner';
-import UserInfo from '../../components/UserInfo/UserInfo';
 import Footer from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
@@ -50,15 +47,15 @@ class Home extends Component {
       <div className={classes.Home}>
         <Header navLinks={this.props.navLinks} />
         <Banner />
-        <div className={classes.UserProfile}>
-          {/* <h2>Profile Information</h2> */}
+        {/* <div className={classes.UserProfile}>
+          <h2>Profile Information</h2>
           <div className={classes.ProfileInfo}>
-            {/* {this.state.userInfos.map((info) => (
+            {this.state.userInfos.map((info) => (
               <UserInfo key={info.label} label={info.label} data={info.data} />
-            ))} */}
+            ))}
           </div>
-        </div>
-        <div className={classes.Hr}></div>
+        </div> */}
+        {/* <div className={classes.Hr}></div> */}
         <div className={classes.About}>
           <h2>About</h2>
           <p>
@@ -71,7 +68,7 @@ class Home extends Component {
           </p>
           <Button
             text="Learn More"
-            type={btnTypes.Button1}
+            type={btnTypes.Button7}
             click={() => {
               // fetch('/post', {
               //   method: 'POST',

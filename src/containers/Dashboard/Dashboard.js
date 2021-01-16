@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import classes from './Dashboard.module.css';
 import Header from '../../components/Header/Header';
@@ -53,7 +52,6 @@ class Dashboard extends Component {
       </div>
     );
     if (this.state.userInfos) {
-      console.log('hello');
       let testsHistoryTable = (
         <div
           style={{

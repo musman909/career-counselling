@@ -199,13 +199,10 @@ class FormWrapper extends Component {
   };
 
   render() {
-    // console.log(this.state.userData);
     const transformedUserData = [];
     for (const key in this.state.userData) {
       transformedUserData.push({ ...this.state.userData[key], id: key });
     }
-
-    // console.log(transformedUserData);
 
     return (
       <div className={classes.FormWrapper}>

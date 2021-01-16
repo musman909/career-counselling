@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Swiper from 'react-id-swiper';
-import 'swiper/swiper-bundle.min.css';
+import 'swiper/css/swiper.css';
 
 import './Banner.css';
 
@@ -17,21 +17,17 @@ import Welcome from './Welcome/Welcome';
 
 // Params definition
 const params = {
-  autoHeight: true, //enable auto height
+  autoHeight: true,
 
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev'
-  },
   pagination: {
     el: '.swiper-pagination',
     type: 'bullets',
-    clickable: true
+    clickable: false
   },
   spaceBetween: 0,
   loop: true,
-  autoplay: true
-  // allowTouchMove: false
+  autoplay: true,
+  allowTouchMove: false
 };
 
 const Banner = (props) => {

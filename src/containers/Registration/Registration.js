@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
 
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
 
 import logo from '../../assests/images/logo.jpeg';
 import FormWrapper from '../../hoc/FormWrapper/FormWrapper';

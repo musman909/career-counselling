@@ -14,7 +14,7 @@ const Footer = () => {
     >
       Copyright &copy; by{' '}
       <span style={{ color: colors.darkbrown }}>
-        <strong>Career Consuelling</strong>
+        <strong>Career Consueling</strong>
       </span>
       , 2020
     </div>

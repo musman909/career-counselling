@@ -74,26 +74,27 @@ class Login extends Component {
       );
       this.onStateChangeHandler('email', 'errorStatus', true);
       error = true;
-    } else if (!this.props.users[this.state.userData.email.value]) {
-      this.onStateChangeHandler(
-        'email',
-        'errorMessage',
-        'email address does not exists!'
-      );
-      this.onStateChangeHandler('email', 'errorStatus', true);
-      error = true;
-    } else if (
-      this.props.users[this.state.userData.email.value].password !==
-      this.state.userData.password.value
-    ) {
-      this.onStateChangeHandler(
-        'password',
-        'errorMessage',
-        'password does not match!'
-      );
-      this.onStateChangeHandler('password', 'errorStatus', true);
-      error = true;
     }
+    // else if (!this.props.users[this.state.userData.email.value]) {
+    //   this.onStateChangeHandler(
+    //     'email',
+    //     'errorMessage',
+    //     'email address does not exists!'
+    //   );
+    //   this.onStateChangeHandler('email', 'errorStatus', true);
+    //   error = true;
+    // } else if (
+    //   this.props.users[this.state.userData.email.value].password !==
+    //   this.state.userData.password.value
+    // ) {
+    //   this.onStateChangeHandler(
+    //     'password',
+    //     'errorMessage',
+    //     'password does not match!'
+    //   );
+    //   this.onStateChangeHandler('password', 'errorStatus', true);
+    //   error = true;
+    // }
 
     if (!error) {
       fetch(
@@ -104,13 +105,14 @@ class Login extends Component {
       )
         .then((data) => data.json())
         .then((res) => {
+          console.log(res);
           const userData = {};
 
-          userData.email = res[0][0];
-          userData.name = res[0][1];
-          userData.password = res[0][2];
-          userData.status = res[0][3];
-          userData.city = res[0][4];
+          userData.email = res[0];
+          userData.name = res[1];
+          userData.password = res[2];
+          userData.status = res[3];
+          userData.city = res[4];
 
           this.props.changeAuthHandler(true);
           this.props.setActiveUserHandler(userData);
@@ -121,7 +123,6 @@ class Login extends Component {
   };
 
   render() {
-    // console.log(this.state.userData.email.value);
     const transformedUserData = [];
     for (const key in this.state.userData) {
       transformedUserData.push({ ...this.state.userData[key], id: key });
@@ -169,12 +170,6 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    users: state.users
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     changeAuthHandler: (auth) =>
@@ -188,4 +183,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
+export default connect(null, mapDispatchToProps)(withRouter(Login));

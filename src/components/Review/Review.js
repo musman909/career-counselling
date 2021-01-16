@@ -4,8 +4,6 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
 import classes from './Review.module.css';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import profileIcon from '../../assests/images/profile-icon.jpg';
 
 const Review = () => {
@@ -16,7 +14,7 @@ const Review = () => {
         <h4>Smion Liu</h4>
         <div className={classes.Rating}>
           <Box component="fieldset" mb={3} borderColor="transparent">
-            <Rating name="read-only" value={4} readOnly />
+            <Rating name="read-only" value={3.5} readOnly />
           </Box>
           <p className={classes.Date}>5 months ago</p>
         </div>

@@ -25,7 +25,8 @@
   border: 1px solid rgb(38, 38, 38);
 }
 
-.Btn2 {
+.Btn2,
+.Btn7 {
   background: rgb(255, 255, 255);
   color: rgb(38, 38, 38);
   border: 1px solid rgb(38, 38, 38);
@@ -48,7 +49,8 @@
   border: 1px solid rgb(199, 109, 21);
 }
 
-.Btn4 {
+.Btn4,
+.Btn8 {
   background: rgb(255, 255, 255);
   color: rgb(199, 109, 21);
   border: 1px solid rgb(199, 109, 21);

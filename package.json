@@ -19,7 +19,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
-    "swiper": "^6.4.5",
+    "swiper": "^5.4.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

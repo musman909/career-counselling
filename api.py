@@ -46,7 +46,9 @@ def login():
 
     mycursor = mydb.cursor()
     mycursor.execute(sql, val)
-    myresult = mycursor.fetchall()
+    myresult = mycursor.fetchone()
+    # sql = SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='yourdatabasename' AND `TABLE_NAME`='users';
+    print(myresult)
     return jsonify(myresult)
 
 

@@ -1,31 +1,8 @@
 import * as actionTypes from './actions';
-import dummyTest from '../constants/dummyTests';
+// import dummyTest from '../constants/dummyTests';
 
 const initialState = {
   isAuth: false,
-  users: {
-    'usman@test.com': {
-      name: 'Usman',
-      password: 'Usman123',
-      status: 'Graduate',
-      city: 'Lahore',
-      tests: [dummyTest, dummyTest, dummyTest]
-    },
-
-    'junaid@test.com': {
-      name: 'Junaid',
-      password: 'Junaid123',
-      status: 'Graduate',
-      city: 'Lahore'
-    },
-
-    'salman@test.com': {
-      name: 'Salman',
-      password: 'Salman123',
-      status: 'Graduate',
-      city: 'Lahore'
-    }
-  },
 
   userData: null,
 

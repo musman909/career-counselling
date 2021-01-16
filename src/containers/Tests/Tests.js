@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
 import Swiper from 'react-id-swiper';
-import 'swiper/swiper-bundle.min.css';
+import 'swiper/css/swiper.css';
 
 import classes from './Tests.module.css';
 import './Tests.css';

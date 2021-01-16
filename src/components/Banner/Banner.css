@@ -2,7 +2,6 @@
   width: 100%;
   height: auto !important;
   text-align: center;
-  overflow: scroll !important;
 }
 
 #Banner .swiper-container .swiper-slide {
@@ -11,15 +10,6 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-#Banner .swiper-container .swiper-pagination {
-  /* width: 100% !important;
-  height: 100px !important;
-  z-index: 1000 !important;
-  border: 1px solid red !important;
-  background: green;
-  color: red !important; */
 }
 
 @media screen and (min-width: 40em) {
