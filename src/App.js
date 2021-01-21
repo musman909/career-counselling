@@ -11,6 +11,7 @@ import Login from './containers/Login/Login';
 import Tests from './containers/Tests/Tests';
 import EditProfile from './containers/EditProfile/EditProfile';
 import TestResult from './containers/TestResult/TestResult';
+import TestScreen from './containers/TestScreen/TestScreen';
 import ForgetPassword from './containers/ForgetPassword/ForgetPassword';
 import Faq from './containers/Faq/Faq';
 import Contact from './containers/Contact/Contact';
@@ -24,7 +25,6 @@ class App extends Component {
     if (this.props.isAuth) {
       userRoutes = (
         <React.Fragment>
-          <Route path="/tests" component={Tests} />
           <Route path="/edit-profile" component={EditProfile} />
 
           <Route path="/view-result/:id" component={TestResult} />
@@ -39,6 +39,10 @@ class App extends Component {
             exact
             render={() => (this.props.isAuth ? <Dashboard /> : <Home />)}
           />
+
+          <Route path="/tests" exact component={Tests} />
+          <Route path="/tests/:id" component={TestScreen} />
+
           <Route path="/contact" exact component={Contact} />
           <Route path="/about" exact component={About} />
           <Route path="/faq" exact component={Faq} />

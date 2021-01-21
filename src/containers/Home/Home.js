@@ -5,8 +5,14 @@ import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
 import Banner from '../../components/Banner/Banner';
 import Footer from '../../components/Footer/Footer';
+import Heading from '../../components/Heading/Heading';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
+
+import img1 from '../../assests/images/complete-the-test.svg';
+import img2 from '../../assests/images/view-detailed results.svg';
+import img3 from '../../assests/images/unlock-your potential.svg';
+import Card from '../../components/Card/Card';
 
 class Home extends Component {
   state = {
@@ -47,17 +53,32 @@ class Home extends Component {
       <div className={classes.Home}>
         <Header navLinks={this.props.navLinks} />
         <Banner />
-        {/* <div className={classes.UserProfile}>
-          <h2>Profile Information</h2>
-          <div className={classes.ProfileInfo}>
-            {this.state.userInfos.map((info) => (
-              <UserInfo key={info.label} label={info.label} data={info.data} />
-            ))}
+        <div className={classes.CardsContainer}>
+          <h1>Free Career Selection Test</h1>
+          {/* <Heading label="About" title="About Us" /> */}
+          <div className={classes.Cards}>
+            <Card
+              icon={img1}
+              title="Complete the Test"
+              data="Be yourself and answer honestly to find out your personality type."
+            />
+            <Card
+              icon={img2}
+              title="View Detailed Results"
+              data="Learn how your personality type influences many areas of your life.
+"
+            />
+            <Card
+              icon={img3}
+              title="Unlock Your Potential"
+              data="Grow into the person you want to be with your optional Premium Profile."
+            />
           </div>
-        </div> */}
-        {/* <div className={classes.Hr}></div> */}
+        </div>
+
         <div className={classes.About}>
-          <h2>About</h2>
+          <h2>About Us</h2>
+          {/* <Heading label="About" title="About Us" /> */}
           <p>
             In our society there’s a major lack of counseling, because of this
             reason many students selects wrong professions and after some time
@@ -66,19 +87,7 @@ class Home extends Component {
             successfully and live a life of a common man due to their unknown
             abilities.
           </p>
-          <Button
-            text="Learn More"
-            type={btnTypes.Button7}
-            click={() => {
-              // fetch('/post', {
-              //   method: 'POST',
-              //   headers: { 'Content-Type': 'application/json' },
-              //   body: JSON.stringify({ title: 'React POST Request' })
-              // })
-              //   .then((response) => response.json())
-              //   .then((data) => console.log(data));
-            }}
-          />
+          <Button text="Learn More" type={btnTypes.Button6} click={() => {}} />
         </div>
         <Footer />
       </div>

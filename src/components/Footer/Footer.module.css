@@ -1,0 +1,45 @@
+.Footer {
+  background: #ef6603;
+  padding: 30px 0;
+  text-align: center;
+}
+
+.Footer h1 {
+  color: #ffffff;
+  margin-bottom: 3px;
+  font-weight: 700;
+}
+
+.Footer h1 span {
+  color: #2a2c39;
+}
+
+.Footer .Slogan {
+  color: #ffffff;
+  font-size: 13px;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.Footer .Copyright {
+  font-size: 14px;
+  margin-top: 30px;
+}
+
+.Footer .Copyright span {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 450px) {
+  .Footer h1 {
+    font-size: 25px;
+  }
+
+  .Footer .Slogan {
+    font-size: 11px;
+  }
+
+  .Footer .Copyright {
+    font-size: 12px;
+  }
+}

@@ -4,17 +4,29 @@
   margin: 10px;
   padding: 10px;
   border: 1px solid #eee;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
 .Label {
-  font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: capitalize;
 }
-.Data {
-  font-size: 20px;
+.Value {
+  text-transform: capitalize;
+  margin-left: 10px;
 }
 
-.Data {
-  margin-left: 20px;
+@media screen and (max-width: 750px) {
+  .UserInfo {
+    flex-basis: 100%;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .UserInfo {
+    flex-basis: 100%;
+    font-size: 12px;
+  }
 }

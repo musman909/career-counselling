@@ -3,9 +3,23 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-top: 80px;
 }
 
 .Reviews {
   flex: 1;
-  margin-top: 80px;
+  margin-top: 20px;
+  padding: 0 50px;
+}
+
+@media screen and (max-width: 750px) {
+  .Reviews {
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .Reviews {
+    padding: 0 10px;
+  }
 }

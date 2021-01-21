@@ -6,7 +6,7 @@ const UserInfo = (props) => {
   return (
     <div className={classes.UserInfo}>
       <p className={classes.Label}>{props.label}:</p>
-      <p className={classes.Data}>{props.data}</p>
+      <p className={classes.Value}>{props.value}</p>
     </div>
   );
 };

@@ -105,7 +105,6 @@ class Login extends Component {
       )
         .then((data) => data.json())
         .then((res) => {
-          console.log(res);
           const userData = {};
 
           userData.email = res[0];
@@ -130,41 +129,45 @@ class Login extends Component {
 
     return (
       <div className={classes.Login}>
-        <img
-          className={classes.Logo}
-          src={logo}
-          alt="career consuelling logo"
-        />
+        <div className={classes.FormWrapper}>
+          <div className={classes.Heading}>
+            <h1>
+              Career <span>Consueling</span>
+            </h1>
 
-        <form className={classes.Form}>
-          {transformedUserData.map((data) => (
-            <Input
-              key={data.id}
-              {...data}
-              onChange={this.onStateChangeHandler}
-              validateInput={this.isValidInputHandler}
-            />
-          ))}
-          <p className={classes.ForgetMsg}>
-            <Link to={`${this.props.match.url}/forget-password`}>
-              forget password?
-            </Link>
-          </p>
-          <div className={classes.BtnsContainer}>
-            <Button
-              text="Login"
-              type={btnTypes.Button4}
-              click={this.validateUserHandler}
-            />
-            <Button
-              text="Cancel"
-              type={btnTypes.Button2}
-              click={() => {
-                this.props.history.push('/');
-              }}
-            />
+            <p className={classes.Slogan}>Find your destination with us</p>
+            <h2>LogIn</h2>
           </div>
-        </form>
+          <form className={classes.Form}>
+            {transformedUserData.map((data) => (
+              <Input
+                key={data.id}
+                {...data}
+                onChange={this.onStateChangeHandler}
+                validateInput={this.isValidInputHandler}
+              />
+            ))}
+            <p className={classes.ForgetMsg}>
+              <Link to={`${this.props.match.url}/forget-password`}>
+                forget password?
+              </Link>
+            </p>
+            <div className={classes.BtnsContainer}>
+              <Button
+                text="Login"
+                type={btnTypes.Button4}
+                click={this.validateUserHandler}
+              />
+              <Button
+                text="Cancel"
+                type={btnTypes.Button2}
+                click={() => {
+                  this.props.history.push('/');
+                }}
+              />
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

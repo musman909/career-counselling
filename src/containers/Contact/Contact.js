@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import classes from './Contact.module.css';
 import Header from '../../components/Header/Header';
+import Heading from '../../components/Heading/Heading';
 import Footer from '../../components/Footer/Footer';
 import Form from '../Form/Form';
 
@@ -116,14 +117,16 @@ class Contact extends Component {
       <div className={classes.ContactScreen}>
         <Header />
         <div className={classes.Contact}>
-          <h1 className={classes.Heading}>Contact Us</h1>
-          <Form
-            userData={transformedUserData}
-            formSubmitHandler={this.sendMessageHandler}
-            validateInput={this.isValidInputHandler}
-            onInputChange={this.onStateChangeHandler}
-            submitBtnText="Send"
-          />
+          <Heading label="Contact" title="Contact Us" />
+          <div className={classes.Form}>
+            <Form
+              userData={transformedUserData}
+              formSubmitHandler={this.sendMessageHandler}
+              validateInput={this.isValidInputHandler}
+              onInputChange={this.onStateChangeHandler}
+              submitBtnText="Send"
+            />
+          </div>
         </div>
         <Footer />
       </div>

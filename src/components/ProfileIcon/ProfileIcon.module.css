@@ -1,7 +1,7 @@
 .ProfileIcon {
-  width: 115px;
-  height: 50px;
-  border-radius: 50%;
+  width: 51px;
+  height: 51px;
+  border-radius: 25px;
   position: absolute;
   top: 50%;
   right: 20px;
@@ -14,7 +14,7 @@
   border-radius: 5px;
   position: absolute;
   top: 100%;
-  right: 10px;
+  right: 0;
   height: 0;
   overflow: hidden;
 }
@@ -25,30 +25,39 @@
 
 .Dropdown li {
   width: 150px;
-  text-align: center;
-  padding: 10px 0;
-  border: 1px solid #eee;
-  cursor: pointer;
-}
-
-.Dropdown li:first-child {
-  border-bottom: 0;
-}
-
-.Dropdown li:hover {
-  background: rgb(199, 109, 21);
-}
-
-.Dropdown li:hover a {
-  color: #ffffff;
 }
 
 .Dropdown ul li a {
   display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10px 0;
+  display: block;
   text-decoration: none;
+  text-align: center;
+  border: 1px solid #eee;
   color: rgb(38, 38, 38);
+  cursor: pointer;
+}
+
+.Dropdown li a:hover {
+  color: #ffffff;
+  background: #ef6603;
+  border: 1px solid #ef6603;
+}
+
+.Dropdown li:first-child a,
+.Dropdown li:first-child a:hover {
+  border-bottom: 0;
 }
 
 .ShowDropDown {
   height: auto !important;
+}
+
+@media screen and (max-width: 450px) {
+  .ProfileIcon {
+    width: 38px;
+    height: 38px;
+  }
 }

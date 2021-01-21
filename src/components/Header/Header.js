@@ -3,16 +3,42 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Header.module.css';
-import Title from './Title/Title';
 import Navigation from './Navigation/Navigation';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
 
 class Header extends Component {
+  state = {
+    showNav: false
+  };
+
+  showNavHandler = () => {
+    console.log(this.state.showNav);
+    this.setState((prevState) => ({
+      showNav: !prevState.showNav
+    }));
+  };
   render() {
+    let hamburgerClasses = [classes.Hamburger];
+    if (this.state.showNav) {
+      hamburgerClasses.push(classes.SlideHamburger);
+    }
     return (
       <div className={classes.Header}>
-        <Title />
-        <Navigation navLinks={this.props.navLinks} />
+        <button
+          className={hamburgerClasses.join(' ')}
+          onClick={this.showNavHandler}
+        >
+          <span
+            className={this.state.showNav ? classes.ToggleHamburger : null}
+          ></span>
+        </button>
+        <h1 className={classes.Title}>
+          <span>Career</span> Consueling
+        </h1>
+        <Navigation
+          navLinks={this.props.navLinks}
+          showNavigation={this.state.showNav}
+        />
         {this.props.isAuth ? <ProfileIcon /> : null}
       </div>
     );

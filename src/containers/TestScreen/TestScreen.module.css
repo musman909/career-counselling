@@ -1,0 +1,98 @@
+.TestScreenContainer {
+  padding-top: 80px;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.TestScreen {
+  flex: 1;
+  padding: 40px 40px 140px 40px;
+}
+
+.Test {
+  background: #fafafa;
+  border: 1.5px solid #eee;
+  border-radius: 10px;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.Test input,
+.Test select {
+  background: inherit;
+}
+
+.Test .Question {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.Test .Question h2 {
+  color: #2a2c39;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.Test .Question input[type='text'] {
+  display: block;
+  resize: none;
+  width: 50%;
+  font-size: 15px;
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid #eee;
+  padding: 0 0 5px 3px;
+  transition: border 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.Test .Question input[type='text']:focus {
+  border-bottom: 2px solid #ef6603;
+}
+
+.Test .Question .Dropdown {
+  width: 50%;
+  max-width: 300px;
+  font-size: 16px;
+  border: 2px solid #eee;
+  outline: none;
+}
+
+.Test .Question .Dropdown:focus {
+  border: 2px solid #eee;
+}
+
+.BtnsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 750px) {
+  .Test .Question h2 {
+    font-size: 18px;
+  }
+
+  .Test .Question .Dropdown {
+    width: 80%;
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .TestScreen {
+    flex: 1;
+    padding: 40px 20px 140px 20px;
+  }
+
+  .Test .Question h2 {
+    font-size: 16px;
+  }
+
+  .Test .Question .Dropdown {
+    width: 100%;
+    font-size: 13px;
+  }
+}

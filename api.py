@@ -2,6 +2,7 @@ import flask
 from flask import request, jsonify
 import mysql.connector
 import json
+import io
 
 from flask_cors import CORS
 
@@ -47,8 +48,7 @@ def login():
     mycursor = mydb.cursor()
     mycursor.execute(sql, val)
     myresult = mycursor.fetchone()
-    # sql = SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='yourdatabasename' AND `TABLE_NAME`='users';
-    print(myresult)
+    # mydb.close()
     return jsonify(myresult)
 
 
@@ -59,11 +59,52 @@ def register():
 
    sql = "insert into users (email, name, password, status, city) VALUES (%s, %s, %s, %s, %s)"
    val = (data["email"],data["name"],data["password"],data["status"],data["city"]);
+   
+   try:    
+        mycursor = mydb.cursor()
+        mycursor.execute(sql, val)
+        mydb.commit()
+        # print(mycursor.rowcount, "record inserted.")
+        mydb.close()
+        return {"status": 200}
+   except mysql.connector.Error as err:
+        print(type(err))
+        return {"status": 1062}
 
-   mycursor = mydb.cursor()
-   mycursor.execute(sql, val)
-   mydb.commit()
-   print(mycursor.rowcount, "record inserted.")
-   return data
+
+@app.route('/tests', methods=['GET'])
+def getTests():
+    sql = "SELECT id,name FROM tests";
+    mycursor = mydb.cursor()
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    result = []
+    for a, b in myresult:
+        obj = { "id": a, "name": b }
+        result.append(obj)
+    return jsonify(result)
+
+
+@app.route('/getTestData', methods=['GET'])
+def getTestData():
+    data = request.args.get('data')
+    data = json.loads(data) 
+    sql = "SELECT * FROM tests WHERE id = " + data["id"]
+    mycursor = mydb.cursor()
+    mycursor.execute(sql)
+    myresult = mycursor.fetchone()
+    response = {"id": myresult[0], "name": myresult[1], "data": json.load(io.BytesIO(myresult[2]))};
+    return jsonify(response)
+    
+
+
+
+
+
+
+
+
+
+
 
 app.run()

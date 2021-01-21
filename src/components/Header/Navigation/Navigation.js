@@ -1,15 +1,19 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import classes from './Navigation.module.css';
-import Navlink from './Navlink/Navlink';
 
 const Navigation = (props) => {
+  let navClasses = [classes.Navigation];
+  if (props.showNavigation) {
+    navClasses.push(classes.ShowNavigation);
+  }
   return (
-    <nav className={classes.Navigation}>
+    <nav className={navClasses.join(' ')}>
       <ul>
         {props.navLinks.map((navlink) => (
           <li key={navlink.title} className={classes.NavItem}>
-            <Navlink title={navlink.title} link={navlink.link} />
+            <NavLink to={navlink.link}>{navlink.title}</NavLink>
           </li>
         ))}
       </ul>

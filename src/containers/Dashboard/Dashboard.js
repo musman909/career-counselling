@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import classes from './Dashboard.module.css';
 import Header from '../../components/Header/Header';
-import Banner from '../../components/Banner/Banner';
+// import Banner from '../../components/Banner/Banner';
 import UserInfo from '../../components/UserInfo/UserInfo';
+import Heading from '../../components/Heading/Heading';
 import Footer from '../../components/Footer/Footer';
 import Spinner from '../../components/Spinner/Spinner';
+import Button from '../../components/Button/Button';
+import btnTypes from '../../constants/btnTypes';
 
 class Dashboard extends Component {
   state = {
@@ -15,43 +19,44 @@ class Dashboard extends Component {
     testsHistory: [
       {
         name: 'Test 1',
-        date: new Date().toString(),
+        date: new Date().toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
         link: '/'
       },
       {
         name: 'Test 1',
-        date: new Date().toString(),
+        date: new Date().toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
         link: '/'
       }
     ]
   };
 
   componentDidMount() {
-    const userInfos = [];
-
-    for (const key in this.props.activeUserData) {
-      userInfos.push({ label: key, data: this.props.activeUserData[key] });
-    }
-    userInfos.push({ label: 'tests', data: 0 });
-
-    this.setState({ userInfos });
+    const userInfo = { ...this.props.activeUserData };
+    userInfo['tests'] = 2;
+    this.setState({ userInfo });
   }
 
   render() {
-    let dashboard = (
-      <div
-        style={{
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <Spinner />
-      </div>
-    );
-    if (this.state.userInfos) {
+    const transformedUserInfo = [];
+    for (const key in this.state.userInfo) {
+      transformedUserInfo.push({
+        label: key,
+        value: this.props.activeUserData[key]
+      });
+    }
+
+    let dashboard = <Spinner />;
+    if (this.state.userInfo) {
       let testsHistoryTable = (
         <div
           style={{
@@ -70,51 +75,72 @@ class Dashboard extends Component {
         </div>
       );
 
-      // if (this.state.userInfos.tests.length > 0) {
-      //   testsHistoryTable = (
-      //     <table className={classes.TestHistoryTable}>
-      //       <thead>
-      //         <tr>
-      //           <th>Test</th>
-      //           <th>Date</th>
-      //           <th>Result</th>
-      //         </tr>
-      //       </thead>
-      //       <tbody>
-      //         {this.state.userInfos.tests.map((test, index) => (
-      //           <tr key={index}>
-      //             <td>{test.id}</td>
-      //             <td>{test.date}</td>
-      //             <td>
-      //               <Link to={`/view-result/${index}`}>View Result</Link>
-      //             </td>
-      //           </tr>
-      //         ))}
-      //       </tbody>
-      //     </table>
-      //   );
-      // }
+      if (this.state.userInfo.tests > 0) {
+        testsHistoryTable = (
+          <table className={classes.TestHistoryTable}>
+            <thead>
+              <tr>
+                <th>Test</th>
+                <th>Date</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.testsHistory.map((test, index) => (
+                <tr key={index}>
+                  <td>{test.name}</td>
+                  <td>{test.date}</td>
+                  <td>
+                    <Link to={`/view-result/${index}`}>View Result</Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        );
+      }
 
       dashboard = (
         <div className={classes.Dashboard}>
           <Header navLinks={this.props.navLinks} isAuth={true} />
-          <Banner />
           <div className={classes.UserProfile}>
-            <h2>Profile Information</h2>
+            <Heading label="profile" title="Profile Information" />
             <div className={classes.ProfileInfo}>
-              {this.state.userInfos.map((info) => (
+              {transformedUserInfo.map((info) => (
                 <UserInfo
                   key={info.label}
                   label={info.label}
-                  data={info.data}
+                  value={info.value}
                 />
               ))}
             </div>
           </div>
           <div className={classes.Hr}></div>
           <div className={classes.TestHistory}>
-            <h2>Test History</h2>
+            <Heading label="test" title="Test History" />
             {testsHistoryTable}
+          </div>
+          <div className={classes.Banner}>
+            <div>
+              <h2>Rate Our Test</h2>
+              <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt
+                mollit anim id est laborum.
+              </p>
+            </div>
+            <Button
+              text="Rate Us"
+              type={btnTypes.Button6}
+              styles={{
+                textTransform: 'uppercase',
+                fontWeight: '600',
+                fontSize: '15px',
+                padding: '10px 50px',
+                borderRadius: '25px'
+              }}
+            />
           </div>
           <Footer />
         </div>

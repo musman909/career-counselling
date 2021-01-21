@@ -1,0 +1,5 @@
+#TestScreen .swiper-container {
+  width: 100%;
+  height: auto !important;
+  text-align: left;
+}

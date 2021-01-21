@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import classes from './FormWrapper.module.css';
+
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import Form from '../../containers/Form/Form';
 import pakCities from '../../constants/pakCities';
 
@@ -45,12 +49,7 @@ class FormWrapper extends Component {
 
         status: {
           value: props.userData ? props.userData['status'] : '',
-          options: [
-            '-- select a value --',
-            'Matric',
-            'Intermediate',
-            'Graduate'
-          ],
+          options: ['Education Status:', 'Matric', 'Intermediate', 'Graduate'],
           errorMessage: 'select your status',
           errorStatus: false,
           inputType: 'select',
@@ -59,7 +58,7 @@ class FormWrapper extends Component {
 
         city: {
           value: props.userData ? props.userData['city'] : '',
-          options: ['-- select a value --', ...pakCities],
+          options: ['Select City:', ...pakCities],
           errorMessage: 'select your city',
           errorStatus: false,
           inputType: 'select',
@@ -68,14 +67,6 @@ class FormWrapper extends Component {
       }
     };
   }
-
-  // componentDidMount() {
-  //   if (this.props.componentName === 'EditProfile') {
-  //     for (let key in this.props.userData) {
-  //       this.onStateChangeHandler(key, 'value', this.props.userData[key]);
-  //     }
-  //   }
-  // }
 
   onStateChangeHandler = (key, type, value) => {
     this.setState((curState) => ({
@@ -126,7 +117,7 @@ class FormWrapper extends Component {
     return false;
   };
 
-  saveProfileDataHandler = (e) => {
+  saveProfileDataHandler = async (e) => {
     e.preventDefault();
     let error = false;
     if (!this.isValidInputHandler('name', this.state.userData.name.value)) {
@@ -194,7 +185,19 @@ class FormWrapper extends Component {
           data[key] = this.state.userData[key].value;
         }
       }
-      this.props.onSubmit(data);
+
+      const res = await this.props.onSubmit(data);
+      console.log(res);
+      if (res && res.status === 200) {
+        this.props.history.push('/login');
+      } else {
+        this.onStateChangeHandler(
+          'email',
+          'errorMessage',
+          'email already exists!'
+        );
+        this.onStateChangeHandler('email', 'errorStatus', true);
+      }
     }
   };
 
@@ -206,6 +209,7 @@ class FormWrapper extends Component {
 
     return (
       <div className={classes.FormWrapper}>
+        {this.props.componentName === 'EditProfile' ? <Header /> : null}
         {this.props.children}
         <Form
           userData={transformedUserData}
@@ -216,9 +220,10 @@ class FormWrapper extends Component {
             this.props.componentName === 'Registration' ? 'Register' : 'Update'
           }
         />
+        {this.props.componentName === 'EditProfile' ? <Footer /> : null}
       </div>
     );
   }
 }
 
-export default FormWrapper;
+export default withRouter(FormWrapper);

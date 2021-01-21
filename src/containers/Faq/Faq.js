@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import classes from './Faq.module.css';
 import Header from '../../components/Header/Header';
+import Heading from '../../components/Heading/Heading';
 import Footer from '../../components/Footer/Footer';
 import faqData from '../../constants/faqData';
 
@@ -11,7 +12,7 @@ class Faq extends Component {
       <div className={classes.FaqScreen}>
         <Header />
         <div className={classes.Faq}>
-          <h1>Frequently Asked Questions</h1>
+          <Heading label="f.a.q" title="Frequently Asked Questions" />
           <ul>
             {faqData.map((data, index) => (
               <li key={index} className={classes.Question}>

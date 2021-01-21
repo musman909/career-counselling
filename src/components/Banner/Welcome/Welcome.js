@@ -27,14 +27,6 @@ const Welcome = (props) => {
           props.history.push('/register');
         }}
       />
-      {/* <button
-        className={classes.Button}
-        onClick={() => {
-          props.history.push('/register');
-        }}
-      >
-        Register
-      </button> */}
     </div>
   );
 };

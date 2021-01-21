@@ -1,7 +1,8 @@
 const colors = {
-  white: 'rgb(255, 255, 255)',
-  darkorange: 'rgb(199, 109, 21)',
-  darkbrown: 'rgb(38, 38, 38)'
+  white: '#FFFFFF',
+  darkorange: '#EF6603',
+  darkbrown: '#2a2c39',
+  lightbrown: '#576071'
 };
 
 export default colors;

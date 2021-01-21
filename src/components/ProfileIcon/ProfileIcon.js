@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import classes from './ProfileIcon.module.css';
-import profileIcon from '../../assests/images/profile-icon.jpg';
+import profileIcon from '../../assests/images/user.png';
 
 class ProfileIcon extends Component {
   state = {

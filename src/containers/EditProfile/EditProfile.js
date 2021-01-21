@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/Header/Header';
 import FormWrapper from '../../hoc/FormWrapper/FormWrapper';
+import Heading from '../../components/Heading/Heading';
+import Footer from '../../components/Footer/Footer';
 import Spinner from '../../components/Spinner/Spinner';
 
 class EditProfile extends Component {
@@ -15,33 +17,11 @@ class EditProfile extends Component {
   }
 
   render() {
-    let screen = (
-      <div
-        style={{
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <Spinner />
-      </div>
-    );
+    let screen = <Spinner />;
     if (this.state.userData) {
       screen = (
         <FormWrapper componentName="EditProfile" userData={this.state.userData}>
-          <Header />;
-          <h1
-            style={{
-              fontSize: '25px',
-              color: 'rgb(199, 109, 21)',
-              textAlign: 'left',
-              marginTop: '40px'
-            }}
-          >
-            Profile Information
-          </h1>
+          <Heading label="Edit Profile" title="Edit Your Profile" />
         </FormWrapper>
       );
     }

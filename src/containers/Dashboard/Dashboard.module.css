@@ -1,5 +1,6 @@
 .Dashboard {
   position: relative;
+  padding-top: 80px;
 }
 
 .UserProfile,
@@ -35,4 +36,81 @@
 .TestHistoryTable th {
   padding: 15px 0;
   border: 1px solid #eee;
+}
+
+.TestHistoryTable td a {
+  text-decoration: none;
+}
+
+.TestHistoryTable td a:hover {
+  color: #ef6603;
+}
+
+.Banner {
+  background: #2a2c39;
+  padding: 100px 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Banner div {
+  flex-basis: 70%;
+}
+
+.Banner h2 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.Banner p {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 1000px) {
+  .Banner {
+    padding: 100px 5%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .ProfileInfo {
+    flex-direction: column;
+  }
+
+  .UserProfile,
+  .TestHistory {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .TestHistoryTable {
+    font-size: 14px;
+  }
+
+  .Banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .Banner p {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .UserProfile,
+  .TestHistory {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .TestHistoryTable {
+    font-size: 12px;
+    margin: 20px 0 0 0;
+  }
 }

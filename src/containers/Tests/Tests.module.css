@@ -3,11 +3,12 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
+  padding-top: 80px;
+  color: #2a2c39;
 }
 
 .Test {
   flex: 1;
-  margin-top: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,6 +33,8 @@
 }
 .Input select {
   width: 30%;
+  max-width: 500px;
+  min-width: 100px;
   margin: 0 10px 0 0;
   outline: none;
 }
@@ -48,21 +51,28 @@
   display: none;
 }
 
-.TestScreen {
-  background: #fafafa;
-  border: 1.5px solid #eee;
-  border-radius: 10px;
-  margin: 20px;
+@media screen and (max-width: 750px) {
+  .Input select {
+    width: 50%;
+  }
+  .Input label,
+  .Input select,
+  .Input select option {
+    font-size: 16px;
+  }
 }
 
-.TestScreen input,
-.TestScreen select {
-  background: inherit;
-}
+@media screen and (max-width: 750px) {
+  .Input select {
+    width: 50%;
+  }
+  .Input label,
+  .Input select,
+  .Input select option {
+    font-size: 14px;
+  }
 
-.BtnsContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0;
+  .Input label {
+    margin: 0 10px;
+  }
 }

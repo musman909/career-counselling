@@ -103,6 +103,7 @@ class Input extends Component {
                 : null
             }
             value={this.state.inputValue}
+            placeholder={this.props.inputLabel}
             resize="none"
             type={this.props.inputType}
             accept={this.props.accept}
@@ -120,6 +121,7 @@ class Input extends Component {
                 : null
             }
             value={this.state.inputValue}
+            placeholder={this.props.inputLabel}
             type={this.props.inputType}
             accept={this.props.accept}
             onChange={(e) => this.onValueChangeHandler(e)}
@@ -130,9 +132,9 @@ class Input extends Component {
     }
     return (
       <div className={classes.InputContainer}>
-        <label style={{ ...this.props.inputLabelStyles }}>
+        {/* <label style={{ ...this.props.inputLabelStyles }}>
           {this.props.inputLabel}
-        </label>
+        </label> */}
 
         <div className={classes.InputWrapper}>
           {input}

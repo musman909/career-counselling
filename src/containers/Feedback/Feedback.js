@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import classes from './Feedback.module.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import Heading from '../../components/Heading/Heading';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
 
@@ -34,7 +35,7 @@ class Feedback extends Component {
       <div className={classes.FeedbackScreen}>
         <Header />
         <div className={classes.Feedback}>
-          <h1>Rate Us!</h1>
+          <Heading label="Rate Us" title="Rate Our Test" />
           <div className={classes.RatingContainer}>
             <Rating
               name="hover-feedback"
@@ -61,7 +62,7 @@ class Feedback extends Component {
             )}
           </div>
           <div className={classes.Comment}>
-            <label>Feedback:</label>
+            <label>Your Feedback:</label>
             <textarea
               className={this.state.value === 0 ? classes.Disable : null}
               value={this.state.comment}

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import classes from './About.module.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import Heading from '../../components/Heading/Heading';
 import aboutData from '../../constants/faqData';
 
 class About extends Component {
@@ -11,7 +12,7 @@ class About extends Component {
       <div className={classes.AboutScreen}>
         <Header />
         <div className={classes.About}>
-          <h1>About Us</h1>
+          <Heading label="about" title="About Us" />
           <ul>
             {aboutData.map((data, index) => (
               <li key={index} className={classes.Question}>

@@ -105,3 +105,108 @@ const testData = {
 };
 
 export default testData;
+
+const test = {
+  name: 'Career Consuelling Test',
+  data: [
+    {
+      question: 'Public speaking points',
+      inputType: 'dropdown',
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+
+    {
+      question: 'Can work long time before system?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+    {
+      question: 'Self-learning capability?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'Extra courses did?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'Talent tests taken?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'Olympiad?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'Reading and writing skills?',
+      inputType: 'dropdown',
+      options: ['poor', 'medium', 'excellent']
+    },
+
+    {
+      question: 'Memory capability score?',
+      inputType: 'dropdown',
+      options: ['poor', 'medium', 'excellent']
+    },
+
+    {
+      question: 'Job or Higher studies?',
+      inputType: 'radio',
+      options: ['higherstudies', 'job']
+    },
+
+    {
+      question: 'Take inputs from seniors or elders?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+    {
+      question: 'Interested in games?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'In a realtionship?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'Gentle or Tuff behaviour?',
+      inputType: 'radio',
+      options: ['stubborn', 'gentle']
+    },
+
+    {
+      question: 'Management or Technical?',
+      inputType: 'radio',
+      options: ['Technical', 'Management']
+    },
+
+    {
+      question: 'Hard worker or Smart worker?',
+      inputType: 'radio',
+      options: ['smart worker', 'hard worker']
+    },
+
+    {
+      question: 'Worked in teams ever?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    },
+
+    {
+      question: 'Introvert?',
+      inputType: 'radio',
+      options: ['yes', 'no']
+    }
+  ]
+};

@@ -1,13 +1,56 @@
 .Registration {
-  background: #ffffff;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 50px 0 0 0;
+  justify-content: center;
+  padding: 100px 20px;
+  background: rgb(239, 102, 3);
+  background: radial-gradient(
+    circle,
+    rgba(239, 102, 3, 1) 0%,
+    rgba(42, 44, 57, 1) 100%
+  );
 }
 
-.Logo {
-  display: block;
-  width: 200px;
-  height: 150px;
+.Registration .Heading {
+  text-align: center;
+}
+
+.Heading h1 {
+  color: #ef6603;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.Heading h1 span {
+  color: #2a2c39;
+}
+
+.Heading .Slogan {
+  color: #2a2c39;
+  font-size: 13px;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.Heading h2 {
+  margin-top: 50px;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 750px) {
+  .Heading h1 {
+    font-size: 23px;
+  }
+
+  .Heading .Slogan {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .Heading h1 {
+    font-size: 20px;
+  }
 }

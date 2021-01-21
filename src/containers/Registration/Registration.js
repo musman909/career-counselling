@@ -3,23 +3,26 @@ import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import logo from '../../assests/images/logo.jpeg';
+import classes from './Registration.module.css';
 import FormWrapper from '../../hoc/FormWrapper/FormWrapper';
 
 class Registration extends Component {
   render() {
     return (
-      <FormWrapper
-        componentName="Registration"
-        onSubmit={this.props.registerUserHandler}
-      >
-        <img
-          src={logo}
-          alt="career consuelling logo"
-          style={{ display: 'block', width: '200px', height: '150px' }}
-        />
-        ;
-      </FormWrapper>
+      <div className={classes.Registration}>
+        <FormWrapper
+          componentName="Registration"
+          onSubmit={this.props.registerUserHandler}
+        >
+          <div className={classes.Heading}>
+            <h1>
+              Career <span>Consueling</span>
+            </h1>
+            <p className={classes.Slogan}>Find your destination with us</p>
+            <h2>Registration</h2>
+          </div>
+        </FormWrapper>
+      </div>
     );
   }
 }
@@ -27,10 +30,9 @@ class Registration extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     registerUserHandler: (userData) => {
-      fetch(`/register?data=${JSON.stringify(userData)}`)
-        .then(() => (window.location.href = '/login'))
-        .catch((err) => alert(err));
-      // dispatch({ type: actionTypes.REGISTER_USER, userData: userData });
+      return fetch(`/register?data=${JSON.stringify(userData)}`)
+        .then((res) => res.json().then((data) => data))
+        .catch(() => null);
     }
   };
 };
