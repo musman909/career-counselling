@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import classes from './Dashboard.module.css';
 import Header from '../../components/Header/Header';
@@ -41,6 +42,13 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
+    const formData = new FormData();
+    formData.append('email', this.props.activeUserEmail);
+    axios
+      .post('/api/getUserProfileData', formData)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+
     const userInfo = { ...this.props.activeUserData };
     userInfo['tests'] = 2;
     this.setState({ userInfo });

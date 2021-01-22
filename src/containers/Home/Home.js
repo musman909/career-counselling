@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import axios from 'axios';
+
 import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
 import Banner from '../../components/Banner/Banner';
@@ -87,7 +89,16 @@ class Home extends Component {
             successfully and live a life of a common man due to their unknown
             abilities.
           </p>
-          <Button text="Learn More" type={btnTypes.Button6} click={() => {}} />
+          <Button
+            text="Learn More"
+            type={btnTypes.Button6}
+            click={() => {
+              axios
+                .get('/api/testing')
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err));
+            }}
+          />
         </div>
         <Footer />
       </div>

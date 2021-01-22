@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Header from '../../components/Header/Header';
+
 import FormWrapper from '../../hoc/FormWrapper/FormWrapper';
 import Heading from '../../components/Heading/Heading';
-import Footer from '../../components/Footer/Footer';
 import Spinner from '../../components/Spinner/Spinner';
 
 class EditProfile extends Component {

@@ -179,24 +179,29 @@ class FormWrapper extends Component {
     }
 
     if (!error) {
-      const data = {};
+      const formData = new FormData();
+
       for (const key in this.state.userData) {
-        if (data[key] !== 'cPassword') {
-          data[key] = this.state.userData[key].value;
+        if (this.state.userData[key] !== 'cPassword') {
+          formData.append(key, this.state.userData[key].value);
         }
       }
 
-      const res = await this.props.onSubmit(data);
-      console.log(res);
-      if (res && res.status === 200) {
-        this.props.history.push('/login');
-      } else {
-        this.onStateChangeHandler(
-          'email',
-          'errorMessage',
-          'email already exists!'
-        );
-        this.onStateChangeHandler('email', 'errorStatus', true);
+      try {
+        const res = await this.props.onSubmit(formData);
+
+        if (res.status === 200) {
+          this.props.history.push('/login');
+        } else {
+          this.onStateChangeHandler(
+            'email',
+            'errorMessage',
+            'email already exists!'
+          );
+          this.onStateChangeHandler('email', 'errorStatus', true);
+        }
+      } catch (err) {
+        alert(err);
       }
     }
   };

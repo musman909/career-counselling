@@ -5,7 +5,6 @@ const initialState = {
   isAuth: false,
 
   userData: null,
-
   activeUser: null,
   userNavLinks: [
     {

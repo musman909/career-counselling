@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-
-import { connect } from 'react-redux';
 
 import classes from './Registration.module.css';
 import FormWrapper from '../../hoc/FormWrapper/FormWrapper';
 
 class Registration extends Component {
+  registerUserHandler = async (userData) => {
+    try {
+      const res = await axios.post('/api/register', userData);
+      return res.data;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  };
   render() {
     return (
       <div className={classes.Registration}>
         <FormWrapper
           componentName="Registration"
-          onSubmit={this.props.registerUserHandler}
+          onSubmit={this.registerUserHandler}
         >
           <div className={classes.Heading}>
             <h1>
@@ -27,14 +34,4 @@ class Registration extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    registerUserHandler: (userData) => {
-      return fetch(`/register?data=${JSON.stringify(userData)}`)
-        .then((res) => res.json().then((data) => data))
-        .catch(() => null);
-    }
-  };
-};
-
-export default connect(null, mapDispatchToProps)(withRouter(Registration));
+export default withRouter(Registration);

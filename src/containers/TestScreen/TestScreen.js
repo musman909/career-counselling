@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
-
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Swiper from 'react-id-swiper';
 import 'swiper/css/swiper.css';
@@ -15,6 +16,7 @@ import InputsGroup from '../../components/InputsGroup/InputsGroup';
 import Button from '../../components/Button/Button';
 import Spinner from '../../components/Spinner/Spinner';
 import inputTypes from '../../constants/inputTypes';
+import btnTypes from '../../constants/btnTypes';
 
 // Params definition
 const params = {
@@ -44,52 +46,54 @@ class TestScreen extends Component {
   }
 
   componentDidMount() {
+    const formData = new FormData();
+    formData.append('id', this.props.match.params.id);
     setTimeout(() => {
-      fetch(
-        `/getTestData?data=${JSON.stringify({
-          id: this.props.match.params.id
-        })}`
-      )
-        .then((res) =>
-          res.json().then((resData) => {
-            const selectedTest = {
-              id: resData.id,
-              name: resData.name,
-              data: []
-            };
+      axios
+        .post('/api/getTestData', formData)
+        .then((resData) => {
+          const inputData = resData.data.data.input;
+          const selectedTest = {
+            id: resData.data.id,
+            name: resData.data.name,
+            outputOptions: resData.data.data.output,
+            data: []
+          };
 
-            resData.data.forEach((testData) => {
-              if (
-                testData.inputType === inputTypes.checkBox ||
-                testData.inputType === inputTypes.radio
-              ) {
-                const options = {};
-                testData.options.forEach((option) => {
-                  options[option.label] = {
-                    isChecked: false,
-                    value: option.value
-                  };
-                });
-                selectedTest.data.push({ ...testData, options, value: '' });
-              } else if (
-                testData.inputType === inputTypes.field ||
-                testData.inputType === inputTypes.dropDown
-              ) {
-                selectedTest.data.push({ ...testData, value: '' });
-              }
-            });
+          inputData.forEach((input) => {
+            if (
+              input.inputType === inputTypes.checkBox ||
+              input.inputType === inputTypes.radio ||
+              input.inputType === inputTypes.dropDown
+            ) {
+              const options = {};
+              input.options.forEach((option) => {
+                options[option.label] = {
+                  value: option.value
+                };
+                if (
+                  input.inputType === inputTypes.checkBox ||
+                  input.inputType === inputTypes.radio
+                ) {
+                  options[option.label]['isChecked'] = false;
+                }
+              });
+              selectedTest.data.push({ ...input, options, value: '' });
+            } else if (input.inputType === inputTypes.field) {
+              selectedTest.data.push({ ...input, value: '' });
+            }
+          });
 
-            console.log(resData);
+          console.log(selectedTest);
 
-            this.setState({
-              selectedTest,
-              activeQuestionNum: 0
-              // loading: false
-            });
-          })
-        )
+          this.setState({
+            selectedTest,
+            activeQuestionNum: 0,
+            loading: false
+          });
+        })
         .catch((err) => {
-          console.log(err);
+          alert(err);
           this.setState({ loading: false, error: true });
         });
     }, 1000);
@@ -159,9 +163,12 @@ class TestScreen extends Component {
       data = [...this.state.selectedTest.data];
       data[index].value = e.target.value;
       for (const key in data[index].options) {
-        data[index].options[key].isChecked = false;
+        if (key === e.target.value) {
+          data[index].options[key].isChecked = true;
+        } else {
+          data[index].options[key].isChecked = false;
+        }
       }
-      data[index].options[e.target.value].isChecked = true;
     } else if (type === inputTypes.field || type === inputTypes.dropDown) {
       data = [...this.state.selectedTest.data];
       data[index].value = e.target.value;
@@ -175,9 +182,9 @@ class TestScreen extends Component {
     }));
   };
 
-  submitTestHandler = () => {
-    let testResponse = {
-      id: this.state.selectedTest.id,
+  submitTestHandler = async () => {
+    const responseValues = [];
+    const testResponseData = {
       name: this.state.selectedTest.name,
       date: new Date().toLocaleDateString('en-US', {
         weekday: 'long',
@@ -185,31 +192,105 @@ class TestScreen extends Component {
         month: 'long',
         day: 'numeric'
       }),
-      data: []
+      data: [],
+      result: null
     };
+
     for (const key in this.state.selectedTest.data) {
-      testResponse.data.push({
-        question: this.state.selectedTest.data[key].question,
-        answer: this.state.selectedTest.data[key].value
+      const question = this.state.selectedTest.data[key].question;
+      const answer = this.state.selectedTest.data[key].value.toString();
+      const value = this.state.selectedTest.data[key].options[answer].value;
+      testResponseData.data.push({
+        question,
+        answer
       });
+
+      responseValues.push(value);
     }
 
-    console.log(testResponse);
+    const formData = new FormData();
 
-    // this.props.addTestHandler(testResponse);
+    const names = [
+      'PubSpeak',
+      'WorkLong',
+      'SelfLearn',
+      'ExtraCourse',
+      'TalentTest',
+      'Olympiad',
+      'ReadingWriting',
+      'CapScore',
+      'Job',
+      'TakenInput',
+      'Games',
+      'Realationship',
+      'Behaviour',
+      'Management',
+      'HardWorker',
+      'WorkedInTeam',
+      'Introvert'
+    ];
+
+    responseValues.forEach((value, index) => {
+      formData.append(names[index], value);
+    });
+
+    try {
+      this.setState({ loading: true });
+      let response = await axios.post('/model/getPredict', formData);
+
+      if (response.status !== 200) {
+        throw new Error('Something went wrong!');
+      }
+
+      const outputOption = this.state.selectedTest.outputOptions.find(
+        (opt) => opt.value === response.data
+      );
+
+      testResponseData.result = outputOption.label;
+
+      response = await this.saveTestResponseHandler(
+        this.props.activeUserEmail,
+        testResponseData.name,
+        JSON.stringify(testResponseData.data),
+        testResponseData.result,
+        testResponseData.date
+      );
+
+      if (response.status !== 200) {
+        throw new Error('Something went wrong!');
+      }
+    } catch (err) {
+      alert(err.message);
+    }
+
+    this.setState({ loading: false });
+
+    // this.props.addTestHandler(testResult);
     // this.props.history.push('/');
   };
 
+  saveTestResponseHandler = (
+    userEmail,
+    testName,
+    testData,
+    testResult,
+    testDate
+  ) => {
+    const formData = new FormData();
+    formData.append('useremail', userEmail);
+    formData.append('testname', testName);
+    formData.append('testdata', testData);
+    formData.append('testresult', testResult);
+    formData.append('testdate', testDate);
+
+    return axios.post('/api/saveUserTestData', formData);
+  };
+
   render() {
-    // console.log(this.state.selectedTest);
     let testScreen = <Spinner />;
 
     if (this.state.loading === false) {
-      let test = (
-        <div className={classes.TestScreen}>
-          <p>something went Wrong!</p>
-        </div>
-      );
+      let test = <p className={classes.ErrorMsg}>Something went Wrong!</p>;
 
       if (this.state.error === false && this.state.selectedTest !== null) {
         test = (
@@ -223,16 +304,17 @@ class TestScreen extends Component {
                     data.inputType === inputTypes.radio ||
                     data.inputType === inputTypes.checkBox
                   ) {
-                    const inputsData = [];
-                    for (const option in data.options) {
-                      inputsData.push({
-                        option: option,
-                        isChecked: data.options[option].isChecked
+                    const inputOptions = [];
+                    for (const key in data.options) {
+                      inputOptions.push({
+                        label: key,
+                        value: data.options[key].value,
+                        isChecked: data.options[key].isChecked
                       });
                     }
                     Cmp = (
                       <InputsGroup
-                        inputsData={inputsData}
+                        inputOptions={inputOptions}
                         type={data.inputType}
                         name={data.question}
                         onChangeHandler={(e) =>
@@ -252,6 +334,13 @@ class TestScreen extends Component {
                       />
                     );
                   } else if (data.inputType === inputTypes.dropDown) {
+                    const dropDownOptions = [];
+                    for (const key in data.options) {
+                      dropDownOptions.push({
+                        label: key,
+                        value: data.options[key].value
+                      });
+                    }
                     Cmp = (
                       <select
                         className={classes.Dropdown}
@@ -263,9 +352,9 @@ class TestScreen extends Component {
                         <option className={classes.DropDownMessage}>
                           -- select a value --
                         </option>
-                        {data.options.map((option) => (
-                          <option key={option} value={option}>
-                            {option}
+                        {dropDownOptions.map((option) => (
+                          <option key={option.label} value={option.label}>
+                            {option.label}
                           </option>
                         ))}
                       </select>
@@ -285,7 +374,7 @@ class TestScreen extends Component {
                   styles={{
                     margin: '0 10px'
                   }}
-                  type="Btn4"
+                  type={btnTypes.Button4}
                   click={this.goPrevQuestion}
                   disable={this.disabledPrevButton()}
                 />
@@ -294,7 +383,7 @@ class TestScreen extends Component {
                   styles={{
                     margin: '0 10px'
                   }}
-                  type="Btn4"
+                  type={btnTypes.Button4}
                   click={this.goNextQuestion}
                   disable={this.disableNextButton()}
                 />
@@ -305,7 +394,7 @@ class TestScreen extends Component {
                   width: '80%',
                   margin: '70px auto 20px auto'
                 }}
-                type="Btn3"
+                type={btnTypes.Button4}
                 click={this.submitTestHandler}
                 disable={this.disableSubmitButton()}
               />
@@ -326,4 +415,11 @@ class TestScreen extends Component {
   }
 }
 
-export default withRouter(TestScreen);
+const mapStateToProps = (state) => {
+  return {
+    activeUserEmail: state.activeUser,
+    activeUserData: state.userData
+  };
+};
+
+export default connect(mapStateToProps, null)(withRouter(TestScreen));

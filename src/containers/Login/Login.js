@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { withRouter, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
 import classes from './Login.module.css';
-import logo from '../../assests/images/logo.jpeg';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
@@ -97,24 +97,15 @@ class Login extends Component {
     // }
 
     if (!error) {
-      fetch(
-        `/login?data=${JSON.stringify({
-          email: this.state.userData.email.value,
-          password: this.state.userData.password.value
-        })}`
-      )
-        .then((data) => data.json())
+      const formData = new FormData();
+      formData.append('email', this.state.userData.email.value);
+      formData.append('password', this.state.userData.password.value);
+
+      axios
+        .post('/api/login', formData)
         .then((res) => {
-          const userData = {};
-
-          userData.email = res[0];
-          userData.name = res[1];
-          userData.password = res[2];
-          userData.status = res[3];
-          userData.city = res[4];
-
           this.props.changeAuthHandler(true);
-          this.props.setActiveUserHandler(userData);
+          this.props.setActiveUserHandler(res.data);
           this.props.history.push('/');
         })
         .catch((err) => console.log(err));

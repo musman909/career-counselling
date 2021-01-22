@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -10,6 +11,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Spinner from '../../components/Spinner/Spinner';
 import Button from '../../components/Button/Button';
+import btnTypes from '../../constants/btnTypes';
 
 class Tests extends Component {
   state = {
@@ -22,7 +24,7 @@ class Tests extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      fetch(`/tests`)
+      fetch('/api/tests')
         .then((res) =>
           res
             .json()
@@ -43,42 +45,42 @@ class Tests extends Component {
   };
 
   showTestScreenHandler = () => {
-    this.props.history.push(`tests/${this.state.selectedTestId}`);
+    this.props.history.push(`/tests/${this.state.selectedTestId}`);
   };
 
   render() {
     let tests = <Spinner />;
 
     if (this.state.loading === false) {
-      let test = (
-        <div className={classes.InputContainer}>
-          <div className={classes.Input}>
-            <label>Choose a test: </label>
-            <select onChange={this.testSelectHandler}>
-              <option className={classes.DropDownMessage}>select a test</option>
-              {this.state.tests.map((test) => (
-                <option key={test.id} value={test.id}>
-                  {test.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Button
-            text="Show Test"
-            styles={{
-              margin: 'auto'
-            }}
-            type="Btn4"
-            click={this.showTestScreenHandler}
-            disable={!this.state.testIsSelected}
-          />
-        </div>
-      );
-
       tests = (
         <div className={classes.Tests}>
           <Header />
-          <div className={classes.Test}>{test}</div>
+          <div className={classes.Test}>
+            <div className={classes.InputContainer}>
+              <div className={classes.Input}>
+                <label>Choose a test: </label>
+                <select onChange={this.testSelectHandler}>
+                  <option className={classes.DropDownMessage}>
+                    select a test
+                  </option>
+                  {this.state.tests.map((test) => (
+                    <option key={test.id} value={test.id}>
+                      {test.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <Button
+                text="Show Test"
+                styles={{
+                  margin: 'auto'
+                }}
+                type={btnTypes.Button4}
+                click={this.showTestScreenHandler}
+                disable={!this.state.testIsSelected}
+              />
+            </div>
+          </div>
           <Footer />
         </div>
       );

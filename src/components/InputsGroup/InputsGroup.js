@@ -5,17 +5,17 @@ import classes from './InputsGroup.module.css';
 const inputsGroup = (props) => {
   return (
     <div className={classes.InputsGroup}>
-      {props.inputsData.map((data) => (
-        <div key={data.option} className={classes.InputContainer}>
+      {props.inputOptions.map((data) => (
+        <div key={data.label} className={classes.InputContainer}>
           <input
-            id={data.option}
+            id={props.name + data.label}
             type={props.type}
             checked={data.isChecked}
-            value={data.option}
-            name={props.type === 'checkbox' ? props.name : null}
+            value={data.label}
+            name={props.name}
             onChange={props.onChangeHandler}
           />
-          <label htmlFor={data.option}>{data.option}</label>
+          <label htmlFor={props.name + data.label}>{data.label}</label>
         </div>
       ))}
     </div>
