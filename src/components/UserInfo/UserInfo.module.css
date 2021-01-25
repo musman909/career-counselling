@@ -13,8 +13,11 @@
   text-transform: capitalize;
 }
 .Value {
-  text-transform: capitalize;
   margin-left: 10px;
+}
+
+.Value::first-letter {
+  text-transform: capitalize;
 }
 
 @media screen and (max-width: 750px) {

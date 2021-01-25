@@ -113,13 +113,18 @@ class Input extends Component {
         );
         break;
       default:
+        let inputClasses = [];
+        if (this.state.showError && this.state.isFocused) {
+          inputClasses.push(classes.RedBorder);
+        }
+
+        if (this.props.disable) {
+          inputClasses.push(classes.Disable);
+        }
+
         input = (
           <input
-            className={
-              this.state.showError && this.state.isFocused
-                ? classes.RedBorder
-                : null
-            }
+            className={inputClasses.join(' ')}
             value={this.state.inputValue}
             placeholder={this.props.inputLabel}
             type={this.props.inputType}
@@ -130,27 +135,22 @@ class Input extends Component {
         );
         break;
     }
-    return (
-      <div className={classes.InputContainer}>
-        {/* <label style={{ ...this.props.inputLabelStyles }}>
-          {this.props.inputLabel}
-        </label> */}
 
-        <div className={classes.InputWrapper}>
-          {input}
-          {this.props.id === 'password' || this.props.id === 'cPassword' ? (
-            <i onClick={this.togglePasswordVisibility}>{eye}</i>
-          ) : null}
-          <p
-            className={
-              this.state.showError && this.state.isFocused
-                ? classes.ShowError
-                : null
-            }
-          >
-            {this.props.errorMessage}
-          </p>
-        </div>
+    return (
+      <div className={classes.InputWrapper}>
+        {input}
+        {this.props.id === 'password' || this.props.id === 'cPassword' ? (
+          <i onClick={this.togglePasswordVisibility}>{eye}</i>
+        ) : null}
+        <p
+          className={
+            this.state.showError && this.state.isFocused
+              ? classes.ShowError
+              : null
+          }
+        >
+          {this.props.errorMessage}
+        </p>
       </div>
     );
   }

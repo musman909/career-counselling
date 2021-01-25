@@ -11,7 +11,8 @@
 
 .Dropdown {
   background: #ffffff;
-  border-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
   position: absolute;
   top: 100%;
   right: 0;
@@ -32,7 +33,7 @@
   width: 100%;
   height: 100%;
   padding: 10px 0;
-  display: block;
+  font-size: 16px;
   text-decoration: none;
   text-align: center;
   border: 1px solid #eee;
@@ -55,7 +56,23 @@
   height: auto !important;
 }
 
+@media screen and (max-width: 750px) {
+  .Dropdown li {
+    width: 120px;
+  }
+  .Dropdown ul li a {
+    font-size: 14px;
+  }
+}
+
 @media screen and (max-width: 450px) {
+  .Dropdown li {
+    width: 100px;
+  }
+  .Dropdown ul li a {
+    font-size: 12px;
+  }
+
   .ProfileIcon {
     width: 38px;
     height: 38px;

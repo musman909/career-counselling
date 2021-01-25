@@ -7,19 +7,26 @@
 }
 
 .Reviews {
+  position: relative;
+  width: 100%;
   flex: 1;
-  margin-top: 20px;
-  padding: 0 50px;
+  padding: 20px 50px 100px 50px;
+}
+
+.Reviews ul {
+  list-style: none;
 }
 
 @media screen and (max-width: 750px) {
   .Reviews {
-    padding: 0 20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
 @media screen and (max-width: 450px) {
   .Reviews {
-    padding: 0 10px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

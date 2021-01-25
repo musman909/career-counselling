@@ -7,6 +7,7 @@
 }
 
 .Feedback {
+  position: relative;
   flex: 1;
   background: #ffffff;
   width: 100%;
@@ -14,10 +15,9 @@
   left: 50%;
   transform: translateX(-50%);
   border-radius: 10px;
-  padding: 30px 20px;
+  padding: 50px 20px 100px 20px;
   border: 1px solid #eee;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 100;
   transition: top 0.5 ease-in-out;
 }
 
@@ -58,12 +58,15 @@
   width: 100%;
   height: 150px;
   outline: none;
-  font-size: 16px;
+  font-size: 15px;
   padding: 7px;
-  border: 1px solid #eee;
+  border: 0.5px solid #eee;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   resize: none;
+}
+
+.Comment textarea:focus {
+  border: 0.5px solid #ef6603;
 }
 
 .Disable {
@@ -76,10 +79,6 @@
 @media screen and (max-width: 750px) {
   .RatingContainer span label {
     font-size: 60px !important;
-  }
-
-  .Comment textarea {
-    font-size: 15px;
   }
 }
 

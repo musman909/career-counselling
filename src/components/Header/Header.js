@@ -12,7 +12,6 @@ class Header extends Component {
   };
 
   showNavHandler = () => {
-    console.log(this.state.showNav);
     this.setState((prevState) => ({
       showNav: !prevState.showNav
     }));

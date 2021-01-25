@@ -15,6 +15,7 @@ import Heading from '../../components/Heading/Heading';
 import InputsGroup from '../../components/InputsGroup/InputsGroup';
 import Button from '../../components/Button/Button';
 import Spinner from '../../components/Spinner/Spinner';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import inputTypes from '../../constants/inputTypes';
 import btnTypes from '../../constants/btnTypes';
 
@@ -33,6 +34,26 @@ const params = {
   allowTouchMove: false
 };
 
+const names = [
+  'PubSpeak',
+  'WorkLong',
+  'SelfLearn',
+  'ExtraCourse',
+  'TalentTest',
+  'Olympiad',
+  'ReadingWriting',
+  'CapScore',
+  'Job',
+  'TakenInput',
+  'Games',
+  'Realationship',
+  'Behaviour',
+  'Management',
+  'HardWorker',
+  'WorkedInTeam',
+  'Introvert'
+];
+
 class TestScreen extends Component {
   constructor() {
     super();
@@ -45,58 +66,57 @@ class TestScreen extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ loading: true });
     const formData = new FormData();
     formData.append('id', this.props.match.params.id);
-    setTimeout(() => {
-      axios
-        .post('/api/getTestData', formData)
-        .then((resData) => {
-          const inputData = resData.data.data.input;
-          const selectedTest = {
-            id: resData.data.id,
-            name: resData.data.name,
-            outputOptions: resData.data.data.output,
-            data: []
-          };
 
-          inputData.forEach((input) => {
+    try {
+      const response = await axios.post('/api/getTestData', formData);
+      if (response.status !== 200) {
+        throw new Error('Something went wrong while fetching tests data');
+      }
+
+      const inputData = response.data.data.input;
+      const selectedTest = {
+        id: response.data.id,
+        name: response.data.name,
+        outputOptions: response.data.data.output,
+        data: []
+      };
+
+      inputData.forEach((input) => {
+        if (
+          input.inputType === inputTypes.checkBox ||
+          input.inputType === inputTypes.radio ||
+          input.inputType === inputTypes.dropDown
+        ) {
+          const options = {};
+          input.options.forEach((option) => {
+            options[option.label] = {
+              value: option.value
+            };
             if (
               input.inputType === inputTypes.checkBox ||
-              input.inputType === inputTypes.radio ||
-              input.inputType === inputTypes.dropDown
+              input.inputType === inputTypes.radio
             ) {
-              const options = {};
-              input.options.forEach((option) => {
-                options[option.label] = {
-                  value: option.value
-                };
-                if (
-                  input.inputType === inputTypes.checkBox ||
-                  input.inputType === inputTypes.radio
-                ) {
-                  options[option.label]['isChecked'] = false;
-                }
-              });
-              selectedTest.data.push({ ...input, options, value: '' });
-            } else if (input.inputType === inputTypes.field) {
-              selectedTest.data.push({ ...input, value: '' });
+              options[option.label]['isChecked'] = false;
             }
           });
+          selectedTest.data.push({ ...input, options, value: '' });
+        } else if (input.inputType === inputTypes.field) {
+          selectedTest.data.push({ ...input, value: '' });
+        }
+      });
 
-          console.log(selectedTest);
-
-          this.setState({
-            selectedTest,
-            activeQuestionNum: 0,
-            loading: false
-          });
-        })
-        .catch((err) => {
-          alert(err);
-          this.setState({ loading: false, error: true });
-        });
-    }, 1000);
+      this.setState({
+        selectedTest,
+        activeQuestionNum: 0,
+        loading: false
+      });
+    } catch (err) {
+      this.setState({ error: err.message, loading: false });
+    }
   }
 
   disabledPrevButton = () => {
@@ -200,35 +220,11 @@ class TestScreen extends Component {
       const question = this.state.selectedTest.data[key].question;
       const answer = this.state.selectedTest.data[key].value.toString();
       const value = this.state.selectedTest.data[key].options[answer].value;
-      testResponseData.data.push({
-        question,
-        answer
-      });
-
+      testResponseData.data.push({ question, answer });
       responseValues.push(value);
     }
 
     const formData = new FormData();
-
-    const names = [
-      'PubSpeak',
-      'WorkLong',
-      'SelfLearn',
-      'ExtraCourse',
-      'TalentTest',
-      'Olympiad',
-      'ReadingWriting',
-      'CapScore',
-      'Job',
-      'TakenInput',
-      'Games',
-      'Realationship',
-      'Behaviour',
-      'Management',
-      'HardWorker',
-      'WorkedInTeam',
-      'Introvert'
-    ];
 
     responseValues.forEach((value, index) => {
       formData.append(names[index], value);
@@ -260,7 +256,7 @@ class TestScreen extends Component {
         throw new Error('Something went wrong!');
       }
     } catch (err) {
-      alert(err.message);
+      this.setState({ error: err.message });
     }
 
     this.setState({ loading: false });
@@ -289,13 +285,15 @@ class TestScreen extends Component {
   render() {
     let testScreen = <Spinner />;
 
-    if (this.state.loading === false) {
-      let test = <p className={classes.ErrorMsg}>Something went Wrong!</p>;
+    if (!this.state.loading) {
+      let test = null;
 
-      if (this.state.error === false && this.state.selectedTest !== null) {
+      if (this.state.error) {
+        test = <ErrorMessage error={this.state.error} />;
+      } else {
         test = (
-          <div className={classes.TestScreen}>
-            <Heading label="Test" title="Test Screen" />
+          <React.Fragment>
+            <Heading label="Test Screen" title={this.state.selectedTest.name} />
             <div className={classes.Test}>
               <Swiper {...params} ref={this.swiperRef}>
                 {this.state.selectedTest.data.map((data, index) => {
@@ -399,13 +397,15 @@ class TestScreen extends Component {
                 disable={this.disableSubmitButton()}
               />
             </div>
-          </div>
+          </React.Fragment>
         );
       }
+
       testScreen = (
         <div id="TestScreen" className={classes.TestScreenContainer}>
           <Header />
-          {test}
+          <div className={classes.TestScreen}>{test}</div>
+
           <Footer />
         </div>
       );

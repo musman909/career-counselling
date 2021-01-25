@@ -1,9 +1,6 @@
-import React, { Component, createRef } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-
-import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import axios from 'axios';
 
 import classes from './Tests.module.css';
 
@@ -11,30 +8,31 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Spinner from '../../components/Spinner/Spinner';
 import Button from '../../components/Button/Button';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import btnTypes from '../../constants/btnTypes';
 
 class Tests extends Component {
   state = {
     selectedTestId: null,
     testIsSelected: false,
-    showTest: false,
+    tests: null,
     loading: true,
-    tests: null
+    error: null
   };
 
-  componentDidMount() {
-    setTimeout(() => {
-      fetch('/api/tests')
-        .then((res) =>
-          res
-            .json()
-            .then((data) => this.setState({ tests: data, loading: false }))
-        )
-        .catch((err) => {
-          console.log(err);
-          this.setState({ loading: false });
-        });
-    }, 1000);
+  async componentDidMount() {
+    this.setState({ loading: true });
+    try {
+      const response = await axios.post('/api/tests');
+
+      if (response.status !== 200) {
+        throw new Error('Something went wrong while fetching tests data');
+      }
+
+      this.setState({ tests: response.data, loading: false });
+    } catch (err) {
+      this.setState({ error: err.message, loading: false });
+    }
   }
 
   testSelectHandler = (e) => {
@@ -49,55 +47,52 @@ class Tests extends Component {
   };
 
   render() {
-    let tests = <Spinner />;
+    let testsScreen = <Spinner />;
 
-    if (this.state.loading === false) {
-      tests = (
-        <div className={classes.Tests}>
-          <Header />
-          <div className={classes.Test}>
-            <div className={classes.InputContainer}>
-              <div className={classes.Input}>
-                <label>Choose a test: </label>
-                <select onChange={this.testSelectHandler}>
-                  <option className={classes.DropDownMessage}>
-                    select a test
+    if (!this.state.loading) {
+      let tests = null;
+      if (this.state.error) {
+        tests = <ErrorMessage error={this.state.error} />;
+      } else {
+        tests = (
+          <div className={classes.InputContainer}>
+            <div className={classes.Input}>
+              <label>Choose a test: </label>
+              <select onChange={this.testSelectHandler}>
+                <option className={classes.DropDownMessage}>
+                  select a test
+                </option>
+                {this.state.tests.map((test) => (
+                  <option key={test.id} value={test.id}>
+                    {test.name}
                   </option>
-                  {this.state.tests.map((test) => (
-                    <option key={test.id} value={test.id}>
-                      {test.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <Button
-                text="Show Test"
-                styles={{
-                  margin: 'auto'
-                }}
-                type={btnTypes.Button4}
-                click={this.showTestScreenHandler}
-                disable={!this.state.testIsSelected}
-              />
+                ))}
+              </select>
             </div>
+            <Button
+              text="Show Test"
+              styles={{
+                margin: 'auto'
+              }}
+              type={btnTypes.Button4}
+              click={this.showTestScreenHandler}
+              disable={!this.state.testIsSelected}
+            />
           </div>
+        );
+      }
+
+      testsScreen = (
+        <div className={classes.TestsScreen}>
+          <Header />
+          <div className={classes.Tests}>{tests}</div>
           <Footer />
         </div>
       );
     }
 
-    return tests;
+    return testsScreen;
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addTestHandler: (test) =>
-//       dispatch({
-//         type: actionTypes.ADD_TEST,
-//         test: test
-//       })
-//   };
-// };
 
 export default withRouter(Tests);

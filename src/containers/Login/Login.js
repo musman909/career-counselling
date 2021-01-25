@@ -3,9 +3,10 @@ import axios from 'axios';
 import { withRouter, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
 
 import classes from './Login.module.css';
+
+import * as actionTypes from '../../store/actions';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
@@ -23,7 +24,8 @@ class Login extends Component {
 
       password: {
         value: '',
-        errorMessage: 'password is incorrect',
+        errorMessage:
+          'password should have atleast 8 characters [includes A-Z, a-z & digits]',
         errorStatus: false,
         inputType: 'password',
         inputLabel: 'Password:'
@@ -55,14 +57,17 @@ class Login extends Component {
       return true;
     }
 
-    if (type === 'password') {
+    if (
+      type === 'password' &&
+      value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+    ) {
       return true;
     }
 
     return false;
   };
 
-  validateUserHandler = (e) => {
+  validateUserHandler = async (e) => {
     e.preventDefault();
     let error = false;
 
@@ -75,40 +80,49 @@ class Login extends Component {
       this.onStateChangeHandler('email', 'errorStatus', true);
       error = true;
     }
-    // else if (!this.props.users[this.state.userData.email.value]) {
-    //   this.onStateChangeHandler(
-    //     'email',
-    //     'errorMessage',
-    //     'email address does not exists!'
-    //   );
-    //   this.onStateChangeHandler('email', 'errorStatus', true);
-    //   error = true;
-    // } else if (
-    //   this.props.users[this.state.userData.email.value].password !==
-    //   this.state.userData.password.value
-    // ) {
-    //   this.onStateChangeHandler(
-    //     'password',
-    //     'errorMessage',
-    //     'password does not match!'
-    //   );
-    //   this.onStateChangeHandler('password', 'errorStatus', true);
-    //   error = true;
-    // }
+
+    if (
+      !this.isValidInputHandler('password', this.state.userData.password.value)
+    ) {
+      this.onStateChangeHandler(
+        'password',
+        'errorMessage',
+        'password should have atleast 8 characters [includes A-Z, a-z & digits]'
+      );
+      this.onStateChangeHandler('password', 'errorStatus', true);
+      error = true;
+    }
 
     if (!error) {
       const formData = new FormData();
       formData.append('email', this.state.userData.email.value);
       formData.append('password', this.state.userData.password.value);
 
-      axios
-        .post('/api/login', formData)
-        .then((res) => {
+      try {
+        const response = await axios.post('/api/login', formData);
+
+        if (response.status !== 200) {
+          throw new Error('Something went wrong!');
+        }
+
+        const resData = response.data;
+        if (resData.error) {
+          this.onStateChangeHandler(
+            resData.input,
+            'errorMessage',
+            resData.message
+          );
+          this.onStateChangeHandler(resData.input, 'errorStatus', true);
+          error = true;
+        } else {
           this.props.changeAuthHandler(true);
-          this.props.setActiveUserHandler(res.data);
+          this.props.setActiveUserHandler(resData.email);
           this.props.history.push('/');
-        })
-        .catch((err) => console.log(err));
+        }
+      } catch (err) {
+        // alert(err.message);
+        console.log(err);
+      }
     }
   };
 
@@ -139,9 +153,7 @@ class Login extends Component {
               />
             ))}
             <p className={classes.ForgetMsg}>
-              <Link to={`${this.props.match.url}/forget-password`}>
-                forget password?
-              </Link>
+              <Link to={'/forget-password'}>forget password?</Link>
             </p>
             <div className={classes.BtnsContainer}>
               <Button
@@ -169,10 +181,10 @@ const mapDispatchToProps = (dispatch) => {
     changeAuthHandler: (auth) =>
       dispatch({ type: actionTypes.CHANGE_AUTH, auth: auth }),
 
-    setActiveUserHandler: (userData) =>
+    setActiveUserHandler: (email) =>
       dispatch({
         type: actionTypes.SET_ACTIVE_USER,
-        userData
+        email: email
       })
   };
 };

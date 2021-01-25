@@ -3,59 +3,95 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
+  padding-top: 80px;
 }
 
 .TestResult {
-  margin-top: 80px;
-  padding: 30px 40px;
+  padding: 50px 40px 120px 40px;
   flex: 1;
-  /* border: 1px solid #eee; */
+  color: #2a2c39;
 }
 
-.TestResult h1 {
-  font-size: 25px;
-  color: black;
-  margin-bottom: 10px;
+.Report {
+  margin-top: 50px;
 }
 
-.TestResult h4 {
+.Report h4 {
   font-size: 18px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-.TestResult h1 span,
-.TestResult h4 span {
-  color: rgb(199, 109, 21);
+.Report h1 span,
+.Report h4 span {
+  color: #ef6603;
   text-transform: capitalize;
 }
 
-.TestResult ul {
+.Report ul {
   list-style: none;
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 20px;
 }
 
-.TestResult ul li {
+.Report ul li {
   margin: 10px 0;
 }
 
-.TestResult ul li p {
-  color: black;
+.Report ul li p {
   line-height: 1.5;
   font-weight: bold;
 }
 
-.TestResult ul li p.Question span {
-  color: rgb(38, 38, 38);
+.Report ul li p.Question span {
+  color: #2a2c39;
 }
 
-.TestResult ul li p.Answer span {
-  color: rgb(199, 109, 21);
+.Report ul li p.Answer span {
+  color: #ef6603;
+}
+
+.Report .Recommendation {
+  font-size: 18px;
+  margin-top: 30px;
 }
 
 .BtnsContainers {
-  margin: 20px auto 50px auto;
+  width: 100%;
+  margin-top: 100px;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 750px) {
+  .TestResult {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .Report h4,
+  .Report .Recommendation {
+    font-size: 17px;
+  }
+
+  .Report ul li p {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .TestResult {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .Report h4,
+  .Report .Recommendation {
+    font-size: 15px;
+  }
+
+  .Report ul li p {
+    font-size: 13px;
+  }
 }

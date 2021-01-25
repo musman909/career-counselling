@@ -1,21 +1,9 @@
-.InputContainer {
+.InputWrapper + .InputWrapper {
+  margin: 10px 0;
+}
+
+.InputWrapper {
   width: 100%;
-}
-
-.InputContainer + .InputContainer {
-  margin: 8px 0;
-}
-
-/* .InputContainer label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: capitalize;
-  color: #2a2c39;
-} */
-
-.InputContainer .InputWrapper {
-  margin-top: 3px;
   position: relative;
 }
 
@@ -63,6 +51,14 @@
 
 .InputWrapper p.ShowError {
   opacity: 1;
+}
+
+.Disable {
+  pointer-events: none !important;
+  background: rgb(170, 170, 170) !important;
+  color: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(170, 170, 170) !important;
+  outline: none !important;
 }
 
 .InputWrapper i {

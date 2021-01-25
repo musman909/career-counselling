@@ -3,8 +3,6 @@ import { withRouter } from 'react-router-dom';
 
 import classes from './FormWrapper.module.css';
 
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import Form from '../../containers/Form/Form';
 import pakCities from '../../constants/pakCities';
 
@@ -27,7 +25,8 @@ class FormWrapper extends Component {
           errorMessage: 'please enter a valid email address',
           errorStatus: false,
           inputType: 'email',
-          inputLabel: 'Email:'
+          inputLabel: 'Email:',
+          disable: props.userData ? true : false
         },
 
         password: {
@@ -40,7 +39,7 @@ class FormWrapper extends Component {
         },
 
         cPassword: {
-          value: props.userData ? props.userData['cPassword'] : '',
+          value: props.userData ? props.userData['password'] : '',
           errorMessage: '',
           errorStatus: false,
           inputType: 'password',
@@ -188,18 +187,24 @@ class FormWrapper extends Component {
       }
 
       try {
-        const res = await this.props.onSubmit(formData);
+        const data = await this.props.onSubmit(formData);
 
-        if (res.status === 200) {
-          this.props.history.push('/login');
+        if (data.error) {
+          throw new Error(data.error);
         } else {
-          this.onStateChangeHandler(
-            'email',
-            'errorMessage',
-            'email already exists!'
-          );
-          this.onStateChangeHandler('email', 'errorStatus', true);
+          this.props.history.push('/');
         }
+
+        // if (res.status === 200) {
+        //   this.props.history.push('/login');
+        // } else {
+        //   this.onStateChangeHandler(
+        //     'email',
+        //     'errorMessage',
+        //     'email already exists!'
+        //   );
+        //   this.onStateChangeHandler('email', 'errorStatus', true);
+        // }
       } catch (err) {
         alert(err);
       }
@@ -213,8 +218,12 @@ class FormWrapper extends Component {
     }
 
     return (
-      <div className={classes.FormWrapper}>
-        {this.props.componentName === 'EditProfile' ? <Header /> : null}
+      <div
+        style={{
+          width: this.props.componentName === 'Registration' ? '60%' : '100%'
+        }}
+        className={classes.FormWrapper}
+      >
         {this.props.children}
         <Form
           userData={transformedUserData}
@@ -225,7 +234,6 @@ class FormWrapper extends Component {
             this.props.componentName === 'Registration' ? 'Register' : 'Update'
           }
         />
-        {this.props.componentName === 'EditProfile' ? <Footer /> : null}
       </div>
     );
   }

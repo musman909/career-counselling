@@ -7,7 +7,7 @@ import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
 import Banner from '../../components/Banner/Banner';
 import Footer from '../../components/Footer/Footer';
-import Heading from '../../components/Heading/Heading';
+// import Heading from '../../components/Heading/Heading';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
 

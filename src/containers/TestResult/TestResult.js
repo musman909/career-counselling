@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import Heading from '../../components/Heading/Heading';
 import Spinner from '../../components/Spinner/Spinner';
 import Button from '../../components/Button/Button';
 
@@ -16,75 +17,71 @@ class TestResult extends Component {
 
   componentDidMount() {
     this.setState({
-      selectedTest: this.props.tests[this.props.match.params.id]
+      selectedTest: this.props.selectedTest
     });
   }
 
   render() {
     console.log(this.state.selectedTest);
-    let testResult = (
-      <div
-        style={{
-          width: '100%',
-          height: '100vh',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <Spinner />
-      </div>
-    );
+    let testResult = <Spinner />;
 
     if (this.state.selectedTest) {
       testResult = (
         <div className={classes.TestResultScreen}>
           <Header />
           <div className={classes.TestResult}>
-            <h1>
-              Test Name: <span>{this.state.selectedTest.id}</span>
-            </h1>
-            <h4>
-              Given Date: <span>{this.state.selectedTest.date}</span>
-            </h4>
-            <ul>
-              {this.state.selectedTest.data.map((data, index) => (
-                <li key={index}>
-                  <p className={classes.Question}>
-                    Question: <span>{data.question}</span>
-                  </p>
-                  <p className={classes.Answer}>
-                    Answer: <span>{data.answer}</span>
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <Heading label="test result" title="test result" />
+            <div className={classes.Report}>
+              <h4>
+                Test Name: <span>{this.state.selectedTest.name}</span>
+              </h4>
+              <h4>
+                Given Date: <span>{this.state.selectedTest.date}</span>
+              </h4>
+              <ul>
+                {this.state.selectedTest.data.map((data, index) => (
+                  <li key={index}>
+                    <p className={classes.Question}>
+                      Qs: <span>{data.question}</span>
+                    </p>
+                    <p className={classes.Answer}>
+                      Ans: <span>{data.answer}</span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <h1 className={classes.Recommendation}>
+                Recommendation: <span>{this.state.selectedTest.result}</span>
+              </h1>
+              <div className={classes.BtnsContainers}>
+                <Button
+                  styles={{ margin: '0 20px' }}
+                  text="Download Result"
+                  type={btnTypes.Button4}
+                  click={() => {}}
+                />
+                <Button
+                  styles={{ margin: '0 20px' }}
+                  text="Rate Us"
+                  type={btnTypes.Button2}
+                  click={() => {}}
+                />
+              </div>
+            </div>
           </div>
-          <div className={classes.BtnsContainers}>
-            <Button
-              styles={{ margin: '0 20px' }}
-              text="Download Result"
-              type={btnTypes.Button4}
-              click={() => {}}
-            />
-            <Button
-              styles={{ margin: '0 20px' }}
-              text="Rate Us"
-              type={btnTypes.Button2}
-              click={() => {}}
-            />
-          </div>
+
           <Footer />
         </div>
       );
     }
 
-    return <React.Fragment>{testResult}</React.Fragment>;
+    return testResult;
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    tests: state.users[state.activeUser].tests
+    selectedTest: state.testsData[ownProps.match.params.id]
   };
 };
 

@@ -8,8 +8,12 @@ import FormWrapper from '../../hoc/FormWrapper/FormWrapper';
 class Registration extends Component {
   registerUserHandler = async (userData) => {
     try {
-      const res = await axios.post('/api/register', userData);
-      return res.data;
+      const response = await axios.post('/api/register', userData);
+      console.log(response);
+      if (response.status !== 200) {
+        throw new Error('Something went wrong!');
+      }
+      return response.data;
     } catch (err) {
       throw new Error(err.message);
     }
