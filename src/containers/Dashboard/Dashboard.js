@@ -35,7 +35,7 @@ class Dashboard extends Component {
     this.setState({ loading: true });
     const formData = new FormData();
     formData.append('email', this.props.userEmail);
-    console.log('User Email:', this.props.userEmail);
+    // console.log('User Email:', this.props.userEmail);
     try {
       const response = await axios.post('/api/getUserProfileData', formData);
       if (response.status !== 200) {
@@ -55,7 +55,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     let dashboardScreen = <Spinner />;
 
     if (!this.state.loading) {

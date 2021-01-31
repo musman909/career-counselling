@@ -18,7 +18,8 @@
 
 .Review h4 {
   color: #2a2c39 !important;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .Review .Rating {
@@ -31,8 +32,12 @@
   margin: 0 !important;
 }
 
+.Review .Rating fieldset span {
+  font-size: 16px !important;
+}
+
 .Review .Rating .Date {
-  font-size: 13.5px;
+  font-size: 12px;
   margin-left: 10px;
   color: #73726c;
 }
@@ -40,8 +45,8 @@
 .Review .Feedback {
   margin-top: 7px;
   line-height: 1.4;
-  font-size: 13.5px;
-  color: #2a2c39 !important;
+  font-size: 12px;
+  color: #73726c !important;
 }
 
 @media screen and (max-width: 750px) {
@@ -57,10 +62,6 @@
 
   .ProfileIcon {
     display: none;
-  }
-
-  .Review .Rating fieldset span {
-    font-size: 16px !important;
   }
 
   .Review .Rating .Date,

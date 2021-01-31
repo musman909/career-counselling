@@ -1,0 +1,44 @@
+.CustomTable {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.CustomTable tr,
+.CustomTable th {
+  border-bottom: 1px solid #eee;
+}
+
+.CustomTable tr:last-child {
+  border: 0;
+}
+
+.CustomTable th {
+  color: #666666;
+  text-transform: uppercase;
+}
+
+.CustomTable th,
+.CustomTable td {
+  font-size: 12px;
+  padding: 10px;
+}
+
+.CustomTable td {
+  color: #797979;
+  text-transform: capitalize;
+}
+
+@media screen and (max-width: 750px) {
+  .CustomTable th,
+  .CustomTable td {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .CustomTable th,
+  .CustomTable td {
+    font-size: 10px;
+  }
+}

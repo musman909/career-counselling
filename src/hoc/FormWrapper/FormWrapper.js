@@ -96,7 +96,7 @@ class FormWrapper extends Component {
 
     if (
       type === 'password' &&
-      value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+      value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/)
     ) {
       return true;
     }

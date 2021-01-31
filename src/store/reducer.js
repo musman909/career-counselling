@@ -4,6 +4,7 @@ import * as actionTypes from './actions';
 const initialState = {
   isAuth: false,
   activeUser: null,
+  activeUserType: null,
   userData: null,
   testsData: null,
   userNavLinks: [
@@ -58,6 +59,29 @@ const initialState = {
       title: 'login',
       link: '/login'
     }
+  ],
+
+  adminNavLinks: [
+    {
+      title: 'dashboard',
+      link: '/'
+    },
+    {
+      title: 'add test',
+      link: '/'
+    },
+    {
+      title: 'remove test',
+      link: '/'
+    },
+    {
+      title: 'update test',
+      link: '/'
+    },
+    {
+      title: 'make admin',
+      link: '/'
+    }
   ]
 };
 
@@ -69,7 +93,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SET_ACTIVE_USER:
       return {
         ...state,
-        activeUser: action.email
+        activeUser: action.userEmail,
+        activeUserType: action.userType
       };
     case actionTypes.SET_PROFILE_DATA:
       return {

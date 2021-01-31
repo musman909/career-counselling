@@ -10,7 +10,15 @@ import classes from './Review.module.css';
 
 import profileIcon from '../../assests/images/user2.png';
 
-const durations = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+const durations = [
+  'years',
+  'months',
+  'days',
+  'hours',
+  'minutes',
+  'seconds',
+  'milliseconds'
+];
 
 const Review = (props) => {
   const feedbackDate = moment(new Date(props.date));

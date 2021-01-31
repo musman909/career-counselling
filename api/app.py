@@ -35,7 +35,8 @@ def sessionCheck():
 @app.route(constants.API + '/getUserProfileData', methods=['POST'])
 def getProfileData():
 
-    sql = "SELECT * FROM users WHERE email = " + "'"+request.form["email"]+"'"
+    sql = "SELECT * FROM students WHERE email = " + \
+        "'"+request.form["email"]+"'"
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     myresult = mycursor.fetchone()
@@ -61,15 +62,17 @@ def getProfileData():
 
 @app.route(constants.API + '/login', methods=['POST'])
 def login():
-
-    sql = "SELECT * FROM users WHERE email = " + "'"+request.form["email"]+"'"
+    user = request.form["user"]
+    sql = "SELECT email, password FROM {}s WHERE email = ".format(
+        user) + "'"+request.form["email"]+"'"
 
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     myresult = mycursor.fetchone()
+    print(myresult)
     response = {}
     if myresult:
-        if myresult[2] == request.form["password"]:
+        if myresult[1] == request.form["password"]:
             response = {"email": myresult[0]}
             session['user_email'] = myresult[0]
         else:
@@ -84,7 +87,7 @@ def login():
 
 @app.route(constants.API + '/register', methods=['POST'])
 def register():
-    sql = "insert into users (email, name, password, status, city) VALUES (%s, %s, %s, %s, %s)"
+    sql = "insert into students (email, name, password, status, city) VALUES (%s, %s, %s, %s, %s)"
     val = (request.form["email"], request.form["name"],
            request.form["password"], request.form["status"], request.form["city"])
 
@@ -100,7 +103,7 @@ def register():
 
 @app.route(constants.API + '/editUserProfile', methods=['POST'])
 def editProfile():
-    sql = "UPDATE users SET name = %s, password = %s, status = %s, city = %s WHERE email = %s"
+    sql = "UPDATE students SET name = %s, password = %s, status = %s, city = %s WHERE email = %s"
     val = (request.form["name"], request.form["password"],
            request.form["status"], request.form["city"], request.form["email"])
 
@@ -199,7 +202,7 @@ def getFeedback():
 
 @app.route(constants.API + '/getUsersReviews', methods=['POST'])
 def getReviews():
-    sql = "SELECT  name,rating,feedback,date FROM users INNER JOIN reviews USING (email)"
+    sql = "SELECT  name,rating,feedback,date FROM students INNER JOIN reviews USING (email)"
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
@@ -217,12 +220,58 @@ def logout():
     session.pop('user_email')
     return {}
 
+# ADMIN
+
+
+@app.route(constants.API + '/getAdminDashboardData', methods=['POST'])
+def getAdminDashboardData():
+    response = {}
+
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM students")
+    mycursor.fetchall()
+    response["usersCount"] = mycursor.rowcount
+
+    mycursor.execute("SELECT * FROM student_test_records")
+    mycursor.fetchall()
+    response["testsCount"] = mycursor.rowcount
+
+    mycursor.execute("SELECT * FROM reviews")
+    mycursor.fetchall()
+    response["reviewsCount"] = mycursor.rowcount
+
+    mycursor.execute(
+        "SELECT email, name, status, city FROM students limit 0,10")
+    myresult = mycursor.fetchall()
+    users = []
+    for user in myresult:
+        users.append(
+            {"email": user[0], "name": user[1], "status": user[2], "city": user[3]})
+    response["users"] = users
+
+    mycursor.execute(
+        "SELECT useremail, testname, testresult, testdate FROM student_test_records limit 0,10")
+    myresult = mycursor.fetchall()
+    tests = []
+    for test in myresult:
+        tests.append(
+            {"email": test[0], "name": test[1], "result": test[2], "date": test[3]})
+    response["tests"] = tests
+
+    mycursor.execute(
+        "SELECT  name, email, rating,feedback,date FROM students INNER JOIN reviews USING (email) limit 0,10")
+    myresult = mycursor.fetchall()
+    reviews = []
+    for review in myresult:
+        reviews.append(
+            {"name": review[0], "email": review[1], "rating": review[2], "feedback": review[3], "date": review[4]})
+    response["reviews"] = reviews
+    return jsonify(response)
+
 
 @app.route(constants.API + '/testing')
 def getData():
     print("hello")
-    # print(
-    #     type(json.dumps({"label": 'Mobile Software Development', "value": 0})))
     return "hello world"
 
 

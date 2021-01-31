@@ -1,0 +1,73 @@
+.AdminDashboardScreen {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.AdminDashboard {
+  background: #edf1f5;
+  padding: 40px 20px;
+}
+
+.StatsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.StatsContainer > * {
+  flex-basis: calc(25% - 20px);
+}
+
+.LineChartContainer,
+.Table {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.Reviews {
+  background: #ffffff;
+  padding: 20px;
+}
+
+.Reviews ul {
+  list-style: none;
+}
+
+.Reviews ul li:last-child > div {
+  border: 0 !important;
+}
+
+.Title {
+  color: #2a2c39;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+  .StatsContainer > * {
+    flex-basis: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .StatsContainer > * {
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .AdminDashboard {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .Title {
+    font-size: 12px;
+  }
+}

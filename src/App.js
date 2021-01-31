@@ -20,6 +20,9 @@ import About from './containers/About/About';
 import Reviews from './containers/Reviews/Reviews';
 import Feedback from './containers/Feedback/Feedback';
 import Spinner from './components/Spinner/Spinner';
+import userTypes from './constants/userTypes';
+
+import AdminDashboard from './containers/Admin/AdminDashboard/AdminDashboard';
 
 class App extends Component {
   state = {
@@ -27,44 +30,73 @@ class App extends Component {
     isAuth: false
   };
 
-  async componentDidMount() {
-    this.setState({ loading: true });
-    try {
-      const response = await axios.post('/api/sessionCheck');
-      if (response.status !== 200) {
-        throw new Error('Something went wrong!');
-      }
-      const resData = response.data;
-      console.log(resData);
+  // async componentDidMount() {
+  //   this.setState({ loading: true });
+  //   try {
+  //     const response = await axios.post('/api/sessionCheck');
+  //     if (response.status !== 200) {
+  //       throw new Error('Something went wrong!');
+  //     }
+  //     const resData = response.data;
+  //     // console.log(resData);
 
-      if (resData.email) {
-        this.props.changeAuthHandler(true);
-        this.props.setActiveUserHandler(resData.email);
-        console.log('email => ', resData.email);
-      } else {
-        this.props.changeAuthHandler(false);
-        this.props.setActiveUserHandler(null);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    this.setState({ loading: false });
-  }
+  //     if (resData.email) {
+  //       this.props.changeAuthHandler(true);
+  //       this.props.setActiveUserHandler(resData.email);
+  //       // console.log('email => ', resData.email);
+  //     } else {
+  //       this.props.changeAuthHandler(false);
+  //       this.props.setActiveUserHandler(null);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   this.setState({ loading: false });
+  // }
 
   render() {
-    console.log('App.js render');
+    // console.log('App.js render');
+    console.log(this.props.userType === userTypes.student);
     let routes = null;
+    const commonRoutes = (
+      <React.Fragment>
+        <Route path="/contact" component={Contact} />
+        <Route path="/about" component={About} />
+        <Route path="/faq" component={Faq} />
+        <Route path="/reviews" component={Reviews} />
+        <Route path="/feedback" component={Feedback} />
+        <Route path="/register" component={Registration} />
+      </React.Fragment>
+    );
     if (this.props.isAuth) {
+      if (this.props.userType === userTypes.student) {
+        routes = (
+          <React.Fragment>
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/edit-profile" component={EditProfile} />
+            <Route path="/tests" exact component={Tests} />
+            <Route path="/tests/:id" component={TestScreen} />
+            <Route path="/view-test-result/:id" component={TestResult} />
+            {commonRoutes}
+          </React.Fragment>
+        );
+      } else {
+        console.log('hello');
+        routes = (
+          <React.Fragment>
+            <Route path="/" exact component={AdminDashboard} />
+          </React.Fragment>
+        );
+      }
+    } else {
       routes = (
         <React.Fragment>
-          <Route path="/edit-profile" component={EditProfile} />
-          <Route path="/tests" exact component={Tests} />
-          <Route path="/tests/:id" component={TestScreen} />
-          <Route path="/view-test-result/:id" component={TestResult} />
+          <Route path="/" exact component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/forget-password" component={ForgetPassword} />
+          {commonRoutes}
         </React.Fragment>
       );
-    } else {
-      routes = <Route path="/login" component={Login} />;
     }
 
     let app = <Spinner />;
@@ -72,24 +104,11 @@ class App extends Component {
     if (!this.state.loading) {
       app = (
         <div>
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={() => (this.props.isAuth ? <Dashboard /> : <Home />)}
-            />
-
-            <Route path="/contact" component={Contact} />
-            <Route path="/about" component={About} />
-            <Route path="/faq" component={Faq} />
-            <Route path="/reviews" component={Reviews} />
-            <Route path="/feedback" component={Feedback} />
-
-            <Route path="/forget-password" component={ForgetPassword} />
-            <Route path="/register" component={Registration} />
+          <AdminDashboard />
+          {/* <Switch>
             {routes}
             <Redirect to="/" />
-          </Switch>
+          </Switch> */}
         </div>
       );
     }
@@ -100,7 +119,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuth: state.isAuth
+    isAuth: state.isAuth,
+    userType: state.activeUserType
   };
 };
 

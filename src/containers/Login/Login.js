@@ -10,6 +10,7 @@ import * as actionTypes from '../../store/actions';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import btnTypes from '../../constants/btnTypes';
+import userTypes from '../../constants/userTypes';
 
 class Login extends Component {
   state = {
@@ -29,6 +30,15 @@ class Login extends Component {
         errorStatus: false,
         inputType: 'password',
         inputLabel: 'Password:'
+      },
+
+      user: {
+        value: 'student',
+        options: ['Login as:', ...Object.values(userTypes)],
+        errorMessage: 'select a type',
+        errorStatus: false,
+        inputType: 'select',
+        inputLabel: 'Current Status:'
       }
     },
     userRecord: null
@@ -59,8 +69,12 @@ class Login extends Component {
 
     if (
       type === 'password' &&
-      value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)
+      value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/)
     ) {
+      return true;
+    }
+
+    if (type === 'user' && value) {
       return true;
     }
 
@@ -93,10 +107,16 @@ class Login extends Component {
       error = true;
     }
 
+    if (!this.isValidInputHandler('user', this.state.userData.user.value)) {
+      this.onStateChangeHandler('user', 'errorStatus', true);
+      error = true;
+    }
+
     if (!error) {
       const formData = new FormData();
       formData.append('email', this.state.userData.email.value);
       formData.append('password', this.state.userData.password.value);
+      formData.append('user', this.state.userData.user.value);
 
       try {
         const response = await axios.post('/api/login', formData);
@@ -116,7 +136,10 @@ class Login extends Component {
           error = true;
         } else {
           this.props.changeAuthHandler(true);
-          this.props.setActiveUserHandler(resData.email);
+          this.props.setActiveUserHandler(
+            resData.email,
+            this.state.userData.user.value
+          );
           this.props.history.push('/');
         }
       } catch (err) {
@@ -181,10 +204,11 @@ const mapDispatchToProps = (dispatch) => {
     changeAuthHandler: (auth) =>
       dispatch({ type: actionTypes.CHANGE_AUTH, auth: auth }),
 
-    setActiveUserHandler: (email) =>
+    setActiveUserHandler: (userEmail, userType) =>
       dispatch({
         type: actionTypes.SET_ACTIVE_USER,
-        email: email
+        userEmail,
+        userType
       })
   };
 };

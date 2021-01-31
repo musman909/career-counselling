@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import classes from './Header.module.css';
 import Navigation from './Navigation/Navigation';
 import ProfileIcon from '../ProfileIcon/ProfileIcon';
+import userTypes from '../../constants/userTypes';
 
 class Header extends Component {
   state = {
@@ -21,6 +22,7 @@ class Header extends Component {
     if (this.state.showNav) {
       hamburgerClasses.push(classes.SlideHamburger);
     }
+
     return (
       <div className={classes.Header}>
         <button
@@ -47,7 +49,11 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuth: state.isAuth,
-    navLinks: state.isAuth ? state.userNavLinks : state.homeNavLinks
+    navLinks: state.isAuth
+      ? state.activeUserType === userTypes.student
+        ? state.userNavLinks
+        : state.adminNavLinks
+      : state.homeNavLinks
   };
 };
 
